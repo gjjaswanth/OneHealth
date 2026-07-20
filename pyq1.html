@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>One Health PYQ 1</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="topbar">
+
+<h2>🩺 One Health PYQ 1</h2>
+
+<p id="counter">Question 1 / 120</p>
+
+<div class="progress">
+
+<div id="progressBar" class="progress-fill"></div>
+
+</div>
+
+</div>
+
+
+<div class="quiz-container">
+
+<form id="quizForm">
+
+</form>
+
+<button class="submit-btn" onclick="submitQuiz()">
+
+Submit Test
+
+</button>
+
+<div id="score" class="score"></div>
+
+</div>
+
+
+<script src="questions.js"></script>
+
+<script>
+
+function shuffle(array){
+
+    return [...array].sort(()=>Math.random()-0.5);
+
+}
+
+// -----------------------------
+
+let questions = shuffle([...quizData]);
+
+const form=document.getElementById("quizForm");
+
+// -----------------------------
+
+questions.forEach((q,index)=>{
+
+    const div=document.createElement("div");
+
+    div.className="question";
+
+    let options=shuffle([...q.o]);
+
+    let html=`
+
+<h2>
+
+${index+1}. ${q.q}
+
+</h2>
+
+`;
+
+    options.forEach(option=>{
+
+        html+=`
+
+<label class="option">
+
+<input
+
+type="radio"
+
+name="q${index}"
+
+value="${option}"
+
+>
+
+${option}
+
+</label>
+
+`;
+
+    });
+
+    html+=`
+
+<p id="r${index}"></p>
+
+`;
+
+    div.innerHTML=html;
+
+    form.appendChild(div);
+
+});
+
+// -----------------------------
+
+window.onload=function(){
+
+updateProgress();
+
+};
+
+// -----------------------------
+
+window.addEventListener("change",updateProgress);
+
+function updateProgress(){
+
+    let answered=0;
+
+    questions.forEach((q,i)=>{
+
+        if(document.querySelector(`input[name=q${i}]:checked`))
+
+            answered++;
+
+    });
+
+    document.getElementById("counter").innerHTML=
+
+    `Answered ${answered} / ${questions.length}`;
+
+    document.getElementById("progressBar").style.width=
+
+    (answered/questions.length*100)+"%";
+
+}
+
+// -----------------------------
+
+function submitQuiz(){
+
+event.preventDefault();
+
+let score=0;
+
+questions.forEach((q,i)=>{
+
+let selected=document.querySelector(`input[name=q${i}]:checked`);
+
+let result=document.getElementById(`r${i}`);
+
+if(selected){
+
+if(selected.value===q.a){
+
+score++;
+
+result.innerHTML="✅ Correct";
+
+result.className="correct";
+
+}
+
+else{
+
+result.innerHTML=
+
+`❌ Wrong<br><b>Correct Answer:</b> ${q.a}`;
+
+result.className="wrong";
+
+}
+
+}
+
+else{
+
+result.innerHTML=
+
+`❌ Not Answered<br><b>Correct Answer:</b> ${q.a}`;
+
+result.className="wrong";
+
+}
+
+});
+
+document.getElementById("score").innerHTML=
+
+`Final Score : ${score} / ${questions.length}`;
+
+window.scrollTo({
+
+top:document.body.scrollHeight,
+
+behavior:"smooth"
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>
