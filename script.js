@@ -1,9 +1,17 @@
 let questions = [...quizData];
+
+// Shuffle questions
 questions = shuffleArray(questions);
+
+// Shuffle options while preserving answer
+questions.forEach(q => {
+    const ans = q.a;
+    q.o = shuffleArray(q.o);
+    q.a = ans;
+});
 
 let currentQuestion = 0;
 let userAnswers = new Array(questions.length).fill(null);
-
 let timer = 60 * 60; // 60 minutes
 
 const questionBox = document.getElementById("question");
@@ -13,7 +21,7 @@ const counter = document.getElementById("counter");
 const timerDisplay = document.getElementById("timer");
 
 function shuffleArray(arr) {
-    let a = [...arr];
+    const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
         [a[i], a[j]] = [a[j], a[i]];
@@ -21,31 +29,24 @@ function shuffleArray(arr) {
     return a;
 }
 
-questions.forEach(q => {
-    const correct = q.a;
-    q.o = shuffleArray(q.o);
-    q.a = correct;
-});
-
 function loadQuestion() {
 
-    let q = questions[currentQuestion];
+    const q = questions[currentQuestion];
 
     questionBox.innerHTML =
-        `<h2>${currentQuestion + 1}. ${q.q}</h2>`;
+        `${currentQuestion + 1}. ${q.q}`;
 
     optionsBox.innerHTML = "";
 
     q.o.forEach(option => {
 
-        let checked =
+        const checked =
             userAnswers[currentQuestion] === option
-            ? "checked"
-            : "";
+                ? "checked"
+                : "";
 
-        optionsBox.innerHTML +=
+        optionsBox.innerHTML += `
 
-`
 <label class="option">
 
 <input
@@ -55,7 +56,7 @@ value="${option}"
 ${checked}
 >
 
-${option}
+<span>${option}</span>
 
 </label>
 
@@ -63,25 +64,33 @@ ${option}
 
     });
 
-    counter.innerHTML =
+    counter.textContent =
         `Question ${currentQuestion + 1} / ${questions.length}`;
 
     progressBar.style.width =
-        ((currentQuestion + 1) / questions.length * 100) + "%";
+        ((currentQuestion + 1) / questions.length) * 100 + "%";
 
-    document.querySelectorAll("input[name=answer]").forEach(r => {
+    document
+        .querySelectorAll("input[name='answer']")
+        .forEach(radio => {
 
-        r.addEventListener("change", function () {
+            radio.addEventListener("change", function () {
 
-            userAnswers[currentQuestion] = this.value;
+                userAnswers[currentQuestion] = this.value;
+
+            });
 
         });
 
-    });
+    document.getElementById("prevBtn").disabled =
+        currentQuestion === 0;
+
+    document.getElementById("nextBtn").disabled =
+        currentQuestion === questions.length - 1;
 
 }
 
-document.getElementById("nextBtn").onclick = () => {
+document.getElementById("nextBtn").addEventListener("click", () => {
 
     if (currentQuestion < questions.length - 1) {
 
@@ -91,9 +100,9 @@ document.getElementById("nextBtn").onclick = () => {
 
     }
 
-}
+});
 
-document.getElementById("prevBtn").onclick = () => {
+document.getElementById("prevBtn").addEventListener("click", () => {
 
     if (currentQuestion > 0) {
 
@@ -103,49 +112,54 @@ document.getElementById("prevBtn").onclick = () => {
 
     }
 
-}
+});
 
-document.getElementById("submitBtn").onclick = submitQuiz;
+document.getElementById("submitBtn").addEventListener("click", () => {
+
+    if (confirm("Submit the quiz?")) {
+
+        submitQuiz();
+
+    }
+
+});
 
 function submitQuiz() {
 
     let score = 0;
 
-    let reviewHTML = "";
+    let review = "";
 
     questions.forEach((q, i) => {
 
-        let selected = userAnswers[i];
+        const selected = userAnswers[i];
 
         if (selected === q.a)
             score++;
 
-        reviewHTML +=
+        review += `
 
-`
 <div class="review">
 
-<h3>Q${i + 1}. ${q.q}</h3>
+<h3>Question ${i + 1}</h3>
+
+<p>${q.q}</p>
 
 <p>
-
 <b>Your Answer:</b>
-
-${selected ? selected : "Not Answered"}
-
+${selected ?? "Not Answered"}
 </p>
 
 <p>
-
 <b>Correct Answer:</b>
 
 <span class="correct">
-
 ${q.a}
-
 </span>
 
 </p>
+
+<hr>
 
 </div>
 
@@ -155,35 +169,39 @@ ${q.a}
 
     document.getElementById("quizArea").style.display = "none";
 
-    document.getElementById("result").innerHTML =
+    document.getElementById("result").innerHTML = `
 
-`
+<h1>
 
-<h2>
+Score : ${score} / ${questions.length}
 
-Final Score : ${score} / ${questions.length}
+</h1>
 
-</h2>
-
-<br>
-
-${reviewHTML}
+${review}
 
 `;
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
 }
 
 function updateTimer() {
 
-    let min = Math.floor(timer / 60);
+    const min = Math.floor(timer / 60);
 
-    let sec = timer % 60;
+    const sec = timer % 60;
 
-    timerDisplay.innerHTML =
-
-`${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+    timerDisplay.textContent =
+        `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
 
     if (timer <= 0) {
+
+        clearInterval(timerInterval);
+
+        alert("Time Up!");
 
         submitQuiz();
 
@@ -195,7 +213,8 @@ function updateTimer() {
 
 }
 
-setInterval(updateTimer, 1000);
+const timerInterval = setInterval(updateTimer, 1000);
 
 loadQuestion();
+
 updateTimer();
