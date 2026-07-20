@@ -1,0 +1,513 @@
+/* ===============================
+   ONE HEALTH QUIZ PORTAL
+   Modern Dark Theme
+================================ */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --bg:#0d1117;
+    --card:#161b22;
+    --card2:#1f2937;
+
+    --primary:#3b82f6;
+    --primaryHover:#2563eb;
+
+    --green:#22c55e;
+    --red:#ef4444;
+
+    --text:#f8fafc;
+    --muted:#9ca3af;
+
+    --border:#30363d;
+
+}
+
+body{
+
+    font-family:'Inter',sans-serif;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    min-height:100vh;
+
+    line-height:1.6;
+
+}
+
+
+/* ===============================
+   Layout
+================================ */
+
+.container{
+
+    width:min(1200px,95%);
+
+    margin:auto;
+
+    padding:40px 20px;
+
+}
+
+
+/* ===============================
+   Header
+================================ */
+
+header{
+
+    text-align:center;
+
+    margin-bottom:50px;
+
+}
+
+header h1{
+
+    font-size:3rem;
+
+    font-weight:700;
+
+    margin-bottom:15px;
+
+}
+
+.subtitle{
+
+    color:var(--muted);
+
+    font-size:1.15rem;
+
+}
+
+
+/* ===============================
+   Cards
+================================ */
+
+.card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:25px;
+
+    transition:.25s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
+
+}
+
+
+/* ===============================
+   Stats
+================================ */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:25px;
+
+    margin-bottom:60px;
+
+}
+
+.stat{
+
+    text-align:center;
+
+}
+
+.stat h2{
+
+    color:var(--muted);
+
+    font-size:1rem;
+
+    margin-bottom:12px;
+
+}
+
+.stat p{
+
+    font-size:2.2rem;
+
+    font-weight:700;
+
+}
+
+
+/* ===============================
+   Exams
+================================ */
+
+.section-title{
+
+    margin-bottom:25px;
+
+    font-size:2rem;
+
+}
+
+.exam-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+    gap:30px;
+
+}
+
+.exam h3{
+
+    margin-bottom:15px;
+
+    font-size:1.6rem;
+
+}
+
+.exam p{
+
+    color:var(--muted);
+
+    margin-bottom:18px;
+
+}
+
+.exam ul{
+
+    list-style:none;
+
+    margin-bottom:25px;
+
+}
+
+.exam li{
+
+    margin:10px 0;
+
+    color:#d1d5db;
+
+}
+
+
+/* ===============================
+   Buttons
+================================ */
+
+.start-btn{
+
+    display:inline-block;
+
+    width:100%;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    background:var(--primary);
+
+    color:white;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.start-btn:hover{
+
+    background:var(--primaryHover);
+
+}
+
+button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#374151;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+}
+
+button:disabled{
+
+    cursor:not-allowed;
+
+    opacity:.55;
+
+}
+
+
+/* ===============================
+   Disabled Cards
+================================ */
+
+.disabled{
+
+    opacity:.75;
+
+}
+
+
+/* ===============================
+   Footer
+================================ */
+
+footer{
+
+    margin-top:70px;
+
+    text-align:center;
+
+    color:var(--muted);
+
+}
+
+
+/* ===============================
+   Quiz Page
+================================ */
+
+.quiz-container{
+
+    width:min(950px,95%);
+
+    margin:auto;
+
+    padding:30px 0;
+
+}
+
+.topbar{
+
+    position:sticky;
+
+    top:0;
+
+    background:#0d1117ee;
+
+    backdrop-filter:blur(10px);
+
+    z-index:100;
+
+    padding:18px;
+
+    border-bottom:1px solid var(--border);
+
+    margin-bottom:30px;
+
+}
+
+.progress{
+
+    width:100%;
+
+    height:10px;
+
+    background:#222;
+
+    border-radius:100px;
+
+    overflow:hidden;
+
+    margin-top:15px;
+
+}
+
+.progress-fill{
+
+    height:100%;
+
+    width:0%;
+
+    background:linear-gradient(90deg,#3b82f6,#60a5fa);
+
+    transition:.4s;
+
+}
+
+.question{
+
+    background:var(--card);
+
+    border-radius:15px;
+
+    border:1px solid var(--border);
+
+    padding:28px;
+
+    margin-bottom:25px;
+
+}
+
+.question h2{
+
+    font-size:1.2rem;
+
+    margin-bottom:20px;
+
+    line-height:1.6;
+
+}
+
+.option{
+
+    display:block;
+
+    padding:15px;
+
+    margin:12px 0;
+
+    border-radius:10px;
+
+    border:1px solid #2b3138;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.option:hover{
+
+    background:#202938;
+
+}
+
+.option input{
+
+    margin-right:12px;
+
+}
+
+
+/* ===============================
+   Result
+================================ */
+
+.correct{
+
+    color:var(--green);
+
+    font-weight:700;
+
+}
+
+.wrong{
+
+    color:var(--red);
+
+    font-weight:700;
+
+}
+
+.score{
+
+    text-align:center;
+
+    font-size:2rem;
+
+    margin:40px 0;
+
+}
+
+
+/* ===============================
+   Submit Button
+================================ */
+
+.submit-btn{
+
+    display:block;
+
+    width:100%;
+
+    background:#16a34a;
+
+    color:white;
+
+    border:none;
+
+    padding:18px;
+
+    font-size:18px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    margin:40px 0;
+
+    transition:.25s;
+
+}
+
+.submit-btn:hover{
+
+    background:#15803d;
+
+}
+
+
+/* ===============================
+   Mobile
+================================ */
+
+@media(max-width:768px){
+
+header h1{
+
+    font-size:2rem;
+
+}
+
+.section-title{
+
+    font-size:1.6rem;
+
+}
+
+.question{
+
+    padding:20px;
+
+}
+
+}
