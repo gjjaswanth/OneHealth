@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2023 One Health Assignments</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --shadow: 0 4px 12px rgba(0,0,0,.05);
+      --green: #118a3a;
+      --red: #c0262d;
+      --button: #111827;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+    }
+    header {
+      text-align: center;
+      padding: 6px 0 20px;
+    }
+    h1 {
+      font-size: clamp(30px, 3.8vw, 52px);
+      line-height: 1.1;
+      margin: 8px 0 6px;
+      font-weight: 800;
+      color: #000;
+    }
+    .subtitle {
+      margin: 0 auto;
+      max-width: 880px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 18px 0 24px;
+    }
+    button, .link-btn {
+      appearance: none;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .08s ease, opacity .2s ease, background .2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button:active, .link-btn:active { transform: translateY(1px); }
+    .btn-primary { background: var(--button); color: #fff; }
+    .btn-secondary { background: #e5e7eb; color: #111827; }
+    .meta {
+      text-align: center;
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    form {
+      display: grid;
+      gap: 18px;
+    }
+    .question-card {
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      border: 1px solid #f0f0f0;
+      padding: 18px 18px 14px;
+    }
+    .qtop {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+    .qtitle {
+      font-size: 18px;
+      line-height: 1.55;
+      margin: 0;
+      font-weight: 500;
+    }
+    .week-badge {
+      flex: 0 0 auto;
+      font-size: 12px;
+      background: #eef2ff;
+      color: #3730a3;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    .options {
+      display: grid;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    label.opt {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 16px;
+      line-height: 1.45;
+      cursor: pointer;
+      user-select: none;
+    }
+    label.opt input {
+      margin-top: 4px;
+      transform: scale(1.05);
+      flex: 0 0 auto;
+    }
+    .text-answer {
+      width: min(420px, 100%);
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+    .text-answer:focus {
+      border-color: #9ca3af;
+      box-shadow: 0 0 0 3px rgba(17,24,39,.08);
+    }
+    .result {
+      margin-top: 12px;
+      font-weight: 700;
+      min-height: 24px;
+      font-size: 15px;
+    }
+    .correct { color: var(--green); }
+    .wrong { color: var(--red); }
+    .note {
+      display: none;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #374151;
+      background: #f9fafb;
+      border: 1px dashed #e5e7eb;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .scorebox {
+      margin-top: 20px;
+      padding: 16px 18px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .scoredetails {
+      display: block;
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .sticky-submit {
+      position: sticky;
+      bottom: 14px;
+      z-index: 5;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+      margin-top: 10px;
+    }
+    .sticky-submit button {
+      pointer-events: auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,.12);
+    }
+    @media (max-width: 700px) {
+      .qtitle { font-size: 17px; }
+      label.opt { font-size: 15px; }
+      .question-card { padding: 16px 14px 12px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>2023 One Health Assignments</h1>
+    <p class="subtitle">Interactive quiz with shuffled questions, instant scoring, and correct/wrong feedback after submission.</p>
+  </header>
+
+  <div class="toolbar">
+    <a class="link-btn btn-secondary" href="./index.html">Home</a>
+    <button class="btn-primary" type="button" onclick="submitQuiz()">Submit</button>
+    <button class="btn-secondary" type="button" onclick="resetQuiz()">Reset</button>
+  </div>
+
+  <div class="meta" id="metaLine"></div>
+  <form id="quizForm"></form>
+
+  <div class="sticky-submit">
+    <button class="btn-primary" type="button" onclick="submitQuiz()">Submit</button>
+  </div>
+
+  <div class="scorebox" id="scoreBox">Submit the quiz to see your score.</div>
+</div>
+
+<script>
+const quizData = [{"week": 1, "q": "Which department comes under One Health?", "type": "single", "options": ["Animal Health", "Human Health", "Environmental Health", "All of the above"], "answer": "All of the above"}, {"week": 1, "q": "What is the full form of \"CDC\"?", "type": "single", "options": ["Centre of Disease Corporation", "Centres for Disease Control and Prevention", "Centres for Disease Prevention Control", "None of these"], "answer": "Centres for Disease Control and Prevention"}, {"week": 1, "q": "Which of these has raised the urgency towards One Health Approach?", "type": "single", "options": ["Increase in Zoonotic Outbreaks", "Increase in Food Borne Diseases", "Rise in Anti-Microbial Resistance", "All of the above"], "answer": "All of the above"}, {"week": 1, "q": "Name the German scholar from the mid 1800s who was an early proponent of One Health.", "type": "single", "options": ["Rudolf Virchow", "Calvin Schwabe", "Lonnie King", "Dr. Renu Swarup"], "answer": "Rudolf Virchow"}, {"week": 1, "q": "National Centre for Disease Control was established in which year?", "type": "single", "options": ["2008", "2010", "2011", "2014"], "answer": "2010"}, {"week": 1, "q": "Which among the following is an Ethical Principle?", "type": "single", "options": ["A) Non-exploitation", "B) Risk Minimization", "Only A", "Both A and B"], "answer": "Both A and B"}, {"week": 1, "q": "In the disciplinary jargon, which disciplinary represents a mixed up salad?", "type": "single", "options": ["Interdisciplinary", "Multidisciplinary", "Intradisciplinary", "Crossdisciplinary"], "answer": "Multidisciplinary"}, {"week": 1, "q": "Which among the following sentences is TRUE for Theory of One Health?", "type": "single", "options": ["A) Provides an explanation of how a desired change takes place within a context", "B) Identifies different steps in the change making process, e.g. linkages, resources", "Only A", "Both A and B"], "answer": "Both A and B"}, {"week": 1, "q": "Which among the following agencies signed an agreement to strengthen Global One Health Governance as a part of the Quadripartite?", "type": "single", "options": ["FAO, OIE, UNEP and CDC", "FAO, OIE, ICMR and WHO", "FAO, OIE, UNEP and WHO", "None of the above"], "answer": "FAO, OIE, UNEP and WHO"}, {"week": 1, "q": "In the ABC of applying the principles of ethics, A stands for?", "type": "text", "answer": "Apophenia"}, {"week": 2, "q": "The number of human pathogens that have been detected in the past three decades are?", "type": "single", "options": ["35", "30", "47", "12"], "answer": "30"}, {"week": 2, "q": "Which year saw the most cases of Ebola outbreaks?", "type": "single", "options": ["2014", "2015", "2016", "2019"], "answer": "2014"}, {"week": 2, "q": "At the time when the pathogen is spilling over through vector, wildlife or domestic animals, which process will help prevent this?", "type": "single", "options": ["Rapid response", "Early detection", "Forecasting readiness", "Controlled operations"], "answer": "Early detection"}, {"week": 2, "q": "Which of the following is TRUE for Indicator-Based Surveillance?", "type": "single", "options": ["Detecting unusual events that may signal an outbreak", "Information is of an unstructured form and is subjective in nature", "Specific diseases are reported from health care providers to public health officials", "Sources of information are social media, community people, written blogs"], "answer": "Specific diseases are reported from health care providers to public health officials"}, {"week": 2, "q": "The highest level of Biosafety Lab-4 is situated in which area?", "type": "single", "options": ["Pune", "Nagpur", "Bhubaneswar", "Delhi"], "answer": "Pune"}, {"week": 2, "q": "Out of these States, which one had repeated outbreaks of the NIPAH virus?", "type": "single", "options": ["Odisha", "Kerala", "Karnataka", "Maharashtra"], "answer": "Kerala"}, {"week": 2, "q": "What were the significant risk factors involved in the NIPAH virus case?", "type": "single", "options": ["Hospital contact duration of more than 24 hours", "Being present in the same room as the infected person", "Contact with body fluids", "All of the above"], "answer": "All of the above"}, {"week": 2, "q": "Which of the following is NOT an impact of epidemics?", "type": "single", "options": ["School dropouts", "Political instability", "Rise in employment", "Increase crime rates"], "answer": "Rise in employment"}, {"week": 2, "q": "Which of the following is TRUE for a Bio-Safety Mobile Lab?", "type": "single", "options": ["It will help in real-time data collection", "It will detect the emerging pandemics at a very early stage", "Both A and B", "Neither A nor B"], "answer": "Both A and B"}, {"week": 2, "q": "The key for One Health is?", "type": "single", "options": ["Collaborating", "Communicating", "Coordinating", "All of the above"], "answer": "All of the above"}, {"week": 5, "q": "Which of the following diseases is transmitted by Culex mosquitoes?", "type": "single", "options": ["Dengue Hemorrhagic Fever", "Zika virus disease", "Japanese Encephalitis", "None of the above"], "answer": "Japanese Encephalitis"}, {"week": 5, "q": "What is the vector for Crimean Congo Hemorrhagic Fever?", "type": "single", "options": ["Aedes aegypti", "Aedes albopictus", "Argasid ticks", "All of the above"], "answer": "Argasid ticks"}, {"week": 5, "q": "Which of the following is included as a pillar for the priority activities set out by the WHO Global Vector Control Response (GVCR) 2017-2030?", "type": "single", "options": ["Strengthen inter- and intra-sectoral action and collaboration", "Engage and mobilize communities", "Both A and B", "Only A"], "answer": "Engage and mobilize communities"}, {"week": 5, "q": "For which of the following mosquito-borne diseases has a One Health approach been used for control for a long time?", "type": "single", "options": ["Dengue", "Japanese Encephalitis", "Lyme Disease", "Scrub Typhus"], "answer": "Japanese Encephalitis"}, {"week": 5, "q": "Which of the following statements is NOT true?", "type": "single", "options": ["Major vector-borne diseases together account for around 17% of the estimated global burden of communicable diseases", "Vector-borne diseases cause a significant economic burden for developing countries", "Each vector-borne disease must be tackled as a separate problem with a separate approach, rather than an integrative approach", "Engaging local authorities and communities as part of broad-based intersectoral collaboration is key to improved vector control delivery"], "answer": "Each vector-borne disease must be tackled as a separate problem with a separate approach, rather than an integrative approach"}, {"week": 5, "q": "Respiratory infections which have emerged in the last few decades include all except:", "type": "single", "options": ["SARS", "HIV", "MERS", "SARS-CoV-2"], "answer": "HIV"}, {"week": 5, "q": "Factors which help an emerging infectious disease to become established include all except:", "type": "single", "options": ["The pathogen must be introduced into a susceptible population", "The pathogen must be able to spread rapidly", "The pathogen must cause fatal infections", "The pathogen is sustained in the population due to continuous increase in number of people infected"], "answer": "The pathogen must cause fatal infections"}, {"week": 5, "q": "Air travel led to spread of the following infectious diseases except:", "type": "single", "options": ["2009 H1N1", "SARS", "COVID-19", "Rabies"], "answer": "Rabies"}, {"week": 5, "q": "Which of the following parasites causes zoonotic malaria infections in parts of south-east Asia?", "type": "single", "options": ["Plasmodium berghei", "Plasmodium ovale", "Plasmodium malariae", "Plasmodium knowlesi"], "answer": "Plasmodium knowlesi"}, {"week": 5, "q": "Which of the following statements is/are false?", "type": "single", "options": ["Vector-borne pathogens can spill over more readily within a disrupted ecosystem than within an intact, diverse ecosystem", "Pigs act as amplifying hosts for Japanese Encephalitis Virus", "The role of “one-health” approach and intersectoral cooperation for control of JE Virus is minimal since there is an effective human vaccine available", "The most important vector for Japanese Encephalitis virus is Culex tritaeniorhynchus"], "answer": "The role of “one-health” approach and intersectoral cooperation for control of JE Virus is minimal since there is an effective human vaccine available"}, {"week": 6, "q": "Which of these is the main factor leading to antimicrobial resistance?", "type": "single", "options": ["Self medication of antibiotics", "Poor doctor-patient ratio", "Non-compliance to doctor's prescription", "All of the above"], "answer": "All of the above"}, {"week": 6, "q": "Which of the following is NOT true for the process of Antimicrobial Resistance containment?", "type": "single", "options": ["Antimicrobial Stewardship", "Improvement of evidences", "Infection Control Stewardship", "Stop antibiotic prescriptions"], "answer": "Stop antibiotic prescriptions"}, {"week": 6, "q": "Which of the following falls under the radar of the Antimicrobial Stewardship Program?", "type": "single", "options": ["Doctors", "Pharmacists", "Administrators", "All of the above"], "answer": "All of the above"}, {"week": 6, "q": "Which of the following is true for Antimicrobial Stewardship Program?", "type": "single", "options": ["It is a set of coordinated interventions", "Ensure patient's optimal treatment", "Reduce inappropriate use of antibiotics", "All of the above"], "answer": "All of the above"}, {"week": 6, "q": "Can self-medication of antibiotics be considered as a factor leading to Antimicrobial Resistance?", "type": "single", "options": ["True", "False"], "answer": "True"}, {"week": 6, "q": "Food Safety is fundamental to which of the following Sustainable Development Goals?", "type": "single", "options": ["1", "2", "12", "All of the above"], "answer": "All of the above"}, {"week": 6, "q": "The Food Safety and Standards Act, 2005 received the assent of the President on which date?", "type": "single", "options": ["1st March, 2006", "23rd August, 2006", "29th August, 2008", "18th May, 2008"], "answer": "29th August, 2008"}, {"week": 6, "q": "Which of the following is an example of Chemical Hazard?", "type": "single", "options": ["Bacteria", "Radiation", "Glass", "Adulterants"], "answer": "Adulterants"}, {"week": 6, "q": "Which of these elements are included in Food Safety?", "type": "single", "options": ["Preparation of food", "Storage of food", "Prevention of foodborne illness", "All of the above"], "answer": "All of the above"}, {"week": 6, "q": "When among the following is the correct option: integrated ____ Surveillance Program.", "type": "single", "options": ["Disease", "Death", "Data", "None of the above"], "answer": "Disease"}, {"week": 6, "q": "Multistakeholder coordination, cooperation and information sharing can greatly contribute to the improvement of food safety and public health?", "type": "single", "options": ["True", "False"], "answer": "True"}, {"week": 6, "q": "The WHO Global Strategy for Food Safety was adopted from the year 2022 until which year?", "type": "text", "answer": "2050"}, {"week": 7, "q": "Which of these is not a part of One Health?", "type": "single", "options": ["Animal Health", "Human Health", "Environment", "Planetary Health"], "answer": "Planetary Health"}, {"week": 7, "q": "What are zoonotic diseases?", "type": "single", "options": ["Diseases that are naturally transmissible from animals to humans", "Diseases that are naturally transmissible from humans to animals", "Diseases that can be transmitted from an animal to another animal", "Diseases that zoo animals spread to each other"], "answer": "Diseases that are naturally transmissible from animals to humans"}, {"week": 7, "q": "Which of the following is not a zoonotic disease?", "type": "single", "options": ["Mucormycosis", "Rabies", "Plague", "SARS"], "answer": "Mucormycosis"}, {"week": 7, "q": "Which of the following is not a part of zoonotic disease emergence?", "type": "single", "options": ["Local transmission", "Epidemic", "Pandemic", "Enervation"], "answer": "Enervation"}, {"week": 7, "q": "Which of the following is a common One Health issue?", "type": "single", "options": ["Zoonoses", "Vector-borne diseases", "Climate change", "All of the above"], "answer": "All of the above"}, {"week": 7, "q": "Which of the following States was successful in achieving the elimination of human dog-mediated rabies in 2021?", "type": "single", "options": ["Uttar Pradesh", "Kerala", "Goa", "Tamil Nadu"], "answer": "Goa"}, {"week": 7, "q": "Which of the following organization is not a part of the WHO-Quadripartite One Health Joint Plan of Action (OH-JPA) formed in 2021?", "type": "single", "options": ["Food and Agriculture Organization (FAO)", "World Organisation for Animal Health (WOAH)", "UN Environment Programme (UNEP)", "United Nations Development Programme (UNDP)"], "answer": "United Nations Development Programme (UNDP)"}, {"week": 7, "q": "KFD, the tick-borne haemorrhagic fever of human, was first reported in:", "type": "single", "options": ["Karnataka", "Andhra Pradesh", "Kerala", "Tamil Nadu"], "answer": "Karnataka"}, {"week": 7, "q": "Which of the following strategies are needed for successful implementation of multi-sectoral One Health initiatives?", "type": "single", "options": ["Strong political will and commitment", "Inter-sectoral collaboration", "Adequate funding", "All of the above"], "answer": "All of the above"}, {"week": 7, "q": "Which is NOT a strategy to ensure multi-sectoral collaboration for One Health initiatives?", "type": "single", "options": ["Policy Coordination", "Development of integrated indicators and safeguards", "Integrated surveillance and monitoring", "Vaccine nationalism"], "answer": "Vaccine nationalism"}, {"week": 8, "q": "Does community engagement strategy address concerns, issues, problems and challenges such as behavioral, cultural, determinants of health system etc.?", "type": "single", "options": ["True", "False"], "answer": "True"}, {"week": 8, "q": "The approach to community participation that assumes humans are rational decision-makers and relies heavily upon information about risks and benefits of certain behaviors is:", "type": "single", "options": ["Behavior change approach", "Community development approach", "Biomedical approach", "None of these"], "answer": "Behavior change approach"}, {"week": 8, "q": "The approach to health promotion that aims to improve and promote health by addressing socioeconomic and environmental determinants of health within the community is:", "type": "single", "options": ["Behavior change", "Community development", "Biomedical", "None of these"], "answer": "Community development"}, {"week": 8, "q": "What are the principles of community participation?", "type": "single", "options": ["Trust, accessibility", "Contextualization, autonomy", "Equity, transparency", "All of the above"], "answer": "All of the above"}, {"week": 8, "q": "Antibiotic resistance happens when the human body becomes resistant to antibiotics.", "type": "single", "options": ["True", "False"], "answer": "False"}, {"week": 8, "q": "What are examples of unsafe food with high chances of contamination?", "type": "single", "options": ["Unpasteurized raw milk", "Undercooked meat or eggs", "Raw fruits and vegetables", "All of the above"], "answer": "All of the above"}, {"week": 8, "q": "_____ is an approach to designing and implementing programmes, policies, legislation and research in which multiple sectors communicate and work together to achieve better public health outcomes.", "type": "single", "options": ["Collaboration", "One Health", "Health for All", "None of the above"], "answer": "One Health"}, {"week": 8, "q": "One Health requires interconnection between people, animals, plants, and their shared environment.", "type": "single", "options": ["True", "False"], "answer": "True"}, {"week": 8, "q": "What are the core domains of One Health?", "type": "single", "options": ["Emerging and re-emerging zoonotic diseases", "Anti-microbial resistance", "Food safety and security", "Biodiversity conservation", "All of the above"], "answer": "All of the above"}, {"week": 8, "q": "A zoonotic infection/disease is:", "type": "single", "options": ["An infection or disease transmitted from an insect to another insect", "An infection or disease transmitted from an animal to an insect", "An infection or disease transmitted from one animal to another animal", "An infection or disease transmitted from an animal to a human"], "answer": "An infection or disease transmitted from an animal to a human"}, {"week": 9, "q": "Choice of the appropriate study design depends on:", "type": "single", "options": ["Research question", "Funds available", "Time period available to complete the study", "All of the above"], "answer": "All of the above"}, {"week": 9, "q": "In which type of epidemiological studies does the investigator assign the exposure?", "type": "single", "options": ["Descriptive studies", "Case-control studies", "Randomized controlled trials", "Cohort studies"], "answer": "Randomized controlled trials"}, {"week": 9, "q": "In a cross-sectional study, data collection is carried out:", "type": "single", "options": ["At a single point of time", "At the start and end of the study", "Multiple times from the same person", "None of the above"], "answer": "At a single point of time"}, {"week": 9, "q": "Randomization is a key feature of:", "type": "single", "options": ["Randomized Controlled Trial", "Cohort studies", "Case reports", "Case-control studies"], "answer": "Randomized Controlled Trial"}, {"week": 9, "q": "Which of the following is true for Cohort studies?", "type": "single", "options": ["A) Follows participants from exposure to outcome", "B) It is costly", "Both A & B", "Random allocation is done"], "answer": "Both A & B"}, {"week": 9, "q": "Which one of the following is not an observational study design?", "type": "single", "options": ["Cluster randomized trial", "Ecological study", "Case-control study", "Cohort study"], "answer": "Cluster randomized trial"}, {"week": 9, "q": "Which of the following is NOT an example of a Natural Disaster?", "type": "single", "options": ["Cyclone", "Landslides", "Earthquakes", "War"], "answer": "War"}, {"week": 9, "q": "A case definition does not define a case as:", "type": "single", "options": ["Possible case", "Probable case", "Confirmed case", "Latent case"], "answer": "Latent case"}, {"week": 9, "q": "Which type of study design is to be adopted for testing the hypothesis?", "type": "single", "options": ["Case-control study", "Case study", "Case report", "Ecological study"], "answer": "Case-control study"}, {"week": 9, "q": "Which of the following is NOT a component under RRS (Rapid Response System)?", "type": "single", "options": ["Responder", "Coordinator", "Activator", "Administration/Administrator"], "answer": "Coordinator"}, {"week": 10, "q": "_____ is an example of central tendency.", "type": "single", "options": ["Median", "Standard deviation", "Average", "Both A & C"], "answer": "Both A & C"}, {"week": 10, "q": "Which of the following parameter is a proportion?", "type": "single", "options": ["Incidence", "Prevalence", "Both A & B", "None of the above"], "answer": "Prevalence"}, {"week": 10, "q": "Probability of rejecting a Null hypothesis when it is false is known as:", "type": "single", "options": ["Type I error", "Confidence interval", "Power", "Type-II error"], "answer": "Power"}, {"week": 10, "q": "When outcome variable is \"Continuous\" and exposure variable is \"Categorical\" having two independent groups, which statistical test may be applied?", "type": "single", "options": ["Paired t-test", "Chi-square test", "Independent t-test", "ANOVA"], "answer": "Independent t-test"}, {"week": 10, "q": "When a researcher wants to check the significant difference in Hemoglobin level of a group of women before and after iron-folic acid therapy, which test of significance may be applied?", "type": "single", "options": ["Paired t-test", "Chi-square test", "Independent t-test", "ANOVA"], "answer": "Paired t-test"}, {"week": 10, "q": "In a survey, participants are chosen from class friends or neighbours for the purpose of knowing their preference for a certain brand of soft drink. This is an example of:", "type": "single", "options": ["Convenience sampling", "Expert sampling", "Cluster sampling", "Stratified sampling"], "answer": "Convenience sampling"}, {"week": 10, "q": "A researcher conducts a study to examine gender inequalities between teachers and state-level hiring practices for new and experienced teachers using the Feminist theory. This is an example of which mixed method design?", "type": "single", "options": ["Multiphase design", "Transformative design", "Embedded design", "Exploratory sequential design"], "answer": "Transformative design"}, {"week": 10, "q": "In which design qualitative and quantitative studies are conducted at the same time, but the information is analysed separately, then combined for interpretation?", "type": "single", "options": ["Explanatory sequential", "Convergent parallel", "Exploratory sequential", "Embedded"], "answer": "Convergent parallel"}, {"week": 10, "q": "Qualitative data are collected first in:", "type": "single", "options": ["An explanatory design", "Triangulation", "An exploratory design", "Secondary data analysis"], "answer": "An exploratory design"}, {"week": 10, "q": "The advantage of using a mixed-method design is that:", "type": "single", "options": ["The researcher does not need to be competent in both", "The researcher does not need to do any more work than in other designs", "Data are rich and themes emerge", "Using both approaches allows the researcher to incorporate the strengths of each"], "answer": "Using both approaches allows the researcher to incorporate the strengths of each"}, {"week": 11, "q": "Which of these is not a part of health policy triangle?", "type": "single", "options": ["Content", "Context", "Process", "People"], "answer": "People"}, {"week": 11, "q": "Which of the following holistic approaches to conceptualise health is anthropocentric in nature?", "type": "multi", "options": ["One Health", "Planetary Health", "Eco Health", "Community Medicine"], "answers": ["Planetary Health", "Community Medicine"]}, {"week": 11, "q": "Which of the following diseases / health conditions can One Health approach be applied to?", "type": "multi", "options": ["Obesity", "Dengue", "Snakebite", "Brucellosis"], "answers": ["Obesity", "Dengue", "Snakebite", "Brucellosis"]}, {"week": 11, "q": "Which of the following is the correct criticism of how One Health is implemented?", "type": "multi", "options": ["The systems thinking aspect is ignored and most studies/programs typically focus on the three separate components which is separately without trying to understand the dynamics and interaction between them", "The environment aspect of One Health is often ignored", "One health does not have equity ingrained as a principle in its approach", "One health is an academic concept"], "answers": ["The systems thinking aspect is ignored and most studies/programs typically focus on the three separate components which is separately without trying to understand the dynamics and interaction between them", "The environment aspect of One Health is often ignored", "One health does not have equity ingrained as a principle in its approach"]}, {"week": 11, "q": "Which of the following is not a challenge of implementing One Health?", "type": "single", "options": ["top-down decision making by governments", "lack of ownership and accountability by a particular government department", "lack of data on burden of disease in health", "government recognition of the need to make systems stronger for future pandemics and climate crisis"], "answer": "government recognition of the need to make systems stronger for future pandemics and climate crisis"}, {"week": 11, "q": "Which of the following is not a challenge of implementing One Health?", "type": "single", "options": ["poor health literacy in communities", "lack of recognition to generalists and methodologists", "excessive focus on laboratory and surveillance aspects of One Health", "lack of long-term funding for One Health projects"], "answer": "poor health literacy in communities"}, {"week": 11, "q": "Which of the following is not a challenge of adoption of One Health approaches in policy?", "type": "single", "options": ["Commercial interests of pharma companies", "Bias in education", "Lack of inter-sectoral trust and communication", "Approach can be applied only for zoonotic diseases"], "answer": "Approach can be applied only for zoonotic diseases"}, {"week": 11, "q": "Which of the following approaches can enable one health initiatives?", "type": "multi", "options": ["Offer training in interpersonal skills, leadership, human resources management, health diplomacy, communication", "Restructure how researchers are evaluated and rewarded within academic institutions to promote work with research non-profits and across disciplines", "Decentralised and unified funding across government departments to improve the health of animals, humans and the environment in local communities", "Multi-sectoral initiatives involving government departments, academic institutes and local communities"], "answers": ["Offer training in interpersonal skills, leadership, human resources management, health diplomacy, communication", "Restructure how researchers are evaluated and rewarded within academic institutions to promote work with research non-profits and across disciplines", "Decentralised and unified funding across government departments to improve the health of animals, humans and the environment in local communities", "Multi-sectoral initiatives involving government departments, academic institutes and local communities"]}, {"week": 11, "q": "Which of the following strategies are needed for successful implementation of multi-sectoral One Health initiatives?", "type": "multi", "options": ["Political will", "Availability of large amount of funding", "Developing key performance indicators shared across related government departments", "Making one government department nodal for multi-sectoral action"], "answers": ["Political will", "Developing key performance indicators shared across related government departments"]}, {"week": 11, "q": "Which is not a strategy to ensure political will for multi-sectoral One Health initiatives?", "type": "single", "options": ["Embed policy analysis in initiative", "Organise round table meetings after completion of major milestones", "Engage communities in co-designing of initiative", "Engage policy makers in co-designing of initiatives"], "answer": "Organise round table meetings after completion of major milestones"}, {"week": 12, "q": "Which level of Community Engagement enables for capacity building of people on ground?", "type": "single", "options": ["Inform", "Create", "Involve", "Empower"], "answer": "Empower"}, {"week": 12, "q": "In which of the following approaches of Community Engagement there is collaboration with leaders in the community?", "type": "single", "options": ["Community-Owned", "Community-Based", "Community-Managed", "Community-Oriented"], "answer": "Community-Managed"}, {"week": 12, "q": "Which of the following makes a key message effective in media engagement?", "type": "single", "options": ["It is Jargon Free", "It is Newsworthy", "Both A & B", "None of the above"], "answer": "Both A & B"}, {"week": 12, "q": "CUBE-A trick is an effective tip for Media Engagement process. What does the 'B' stand for in this?", "type": "single", "options": ["Believe", "Brief", "Borrow", "Browse"], "answer": "Brief"}, {"week": 12, "q": "In Gorakhpur region of the U.P State, a Community Intervention was launched by the Government to spread awareness on the AES/JE disease. What was the name of the program?", "type": "text", "answer": "DASTAK Program"}, {"week": 12, "q": "Which of the following can be an example of a Community?", "type": "single", "options": ["Healthcare workers in a region", "Mothers of 10 year old children", "Group of people belonging to a media group", "All of the above"], "answer": "All of the above"}, {"week": 12, "q": "Which of the following are the 4 P's of Commercial Marketing?", "type": "single", "options": ["Product, Place, Price, Promotion", "Produce, Place, Price, Promotion", "Product, Phase, Price, Promotion", "Product, Phuse, Price, Promotion"], "answer": "Product, Place, Price, Promotion"}, {"week": 12, "q": "Which of the following are the Stages in Behaviour Adoption?", "type": "single", "options": ["Action", "Contemplation", "Knowledge", "All of the above"], "answer": "All of the above"}, {"week": 12, "q": "An effective Community Engagement Strategy should consider which of the following statements?", "type": "single", "options": ["Experiences in people's participation at the community level", "Infrastructure for community engagement", "Both A & B", "None of the above"], "answer": "Both A & B"}, {"week": 12, "q": "Equity is:", "type": "single", "options": ["Principle of Community Engagement", "Enabler of Community Engagement", "Principle and Enabler of Community Engagement", "None of the above"], "answer": "Principle of Community Engagement"}, {"week": 3, "q": "Which of these conditions does not qualify as an emerging disease?", "type": "single", "options": ["A disease appearing in a place for the first time", "A disease spreading to new areas", "A disease which is affecting uniform number of individuals for some years", "A disease which was not known earlier"], "answer": "A disease which is affecting uniform number of individuals for some years"}, {"week": 3, "q": "Transmissible Vaccine Derived Poliovirus can be classified into which of the following categories?", "type": "single", "options": ["Newly emerging infectious diseases", "Re-emerging infectious diseases", "Deliberately emerging infectious diseases", "Accidentally emerging infectious diseases", "De-emerging infectious diseases"], "answer": "Accidentally emerging infectious diseases"}, {"week": 3, "q": "Which of the following would you classify influenza into?", "type": "single", "options": ["Newly emerging infectious diseases", "Re-emerging infectious diseases", "Deliberately emerging infectious diseases", "Accidentally emerging infectious diseases", "De-emerging infectious diseases"], "answer": "Re-emerging infectious diseases"}, {"week": 3, "q": "Which of the following was not major reservoirs of 21st century outbreaks?", "type": "single", "options": ["Camels", "Bats", "Poultry", "Elephants"], "answer": "Elephants"}, {"week": 3, "q": "Which of the following is not an example of newly identified emerging infection?", "type": "single", "options": ["SARS", "MERS", "Nipah", "Cholera"], "answer": "Cholera"}, {"week": 3, "q": "Which of the following is an example of re-emerging disease?", "type": "single", "options": ["COVID-19", "Polio", "Anthrax", "Diphtheria"], "answer": "Diphtheria"}, {"week": 3, "q": "Which of the following diseases is considered as most potential for bioterrorism?", "type": "single", "options": ["COVID-19", "Cholera", "Anthrax", "Swine flu"], "answer": "Anthrax"}, {"week": 3, "q": "Which of the following is the correct disease-source pair?", "type": "single", "options": ["Lassa : Bats", "HIV : Chimpanzees and Monkeys", "Dengue : Mosquitoes", "EVD : Wild boars"], "answer": "HIV : Chimpanzees and Monkeys"}, {"week": 3, "q": "What among the following was a strategy adopted for countering disease emergence following the Ebola outbreak of 2014?", "type": "single", "options": ["Political will to fight new and emerging infections", "Enhance sensitivity of case reporting and finding", "Development of a MSD network for prioritized diseases", "Making one government department model for multi-sector action for each member country"], "answer": "Development of a MSD network for prioritized diseases"}, {"week": 3, "q": "Which among the following is not an immediate emerging threat of viral infection in India?", "type": "single", "options": ["Rotavirus", "Avian influenza H5N1", "Yellow fever virus", "Cyclops virus"], "answer": "Rotavirus"}, {"week": 3, "q": "Which of the following are host factors for disease emergence?", "type": "single", "options": ["Poverty and social inequity", "Antimicrobial resistance", "Climate change", "Technology and industry"], "answer": "Poverty and social inequity"}, {"week": 3, "q": "Approximately what percentage of emerging infections originate from animals?", "type": "single", "options": ["25%", "60%", "75%", "80%"], "answer": "75%"}, {"week": 3, "q": "What is the relationship of emergence of zoonotic diseases with duration and extent of human exposure to animals?", "type": "single", "options": ["No proven relationship", "Directly proportional", "Inversely proportional", "Occasional and therefore cannot be determined"], "answer": "Directly proportional"}, {"week": 3, "q": "Which of the following is not a component of risk assessment?", "type": "single", "options": ["Risk identification", "Risk evaluation", "Risk analysis", "Establishing the context of the risk"], "answer": "Establishing the context of the risk"}, {"week": 3, "q": "The method through which word rounds of opinion of experts in a control or policy issue is carried out mostly through anonymous forms/questionnaire is called?", "type": "single", "options": ["Option sort", "Risk matrix", "Delphi", "Analyze hierarchy"], "answer": "Delphi"}, {"week": 4, "q": "Emerging infectious diseases are defined as?", "type": "single", "options": ["Persistence of underrecognized infectious diseases", "Outbreak of unknown disease", "New disease which has increased in incidence since the last 20 years", "All the above"], "answer": "All the above"}, {"week": 4, "q": "Distribution and intensity of infection in a reservoir is dependent on?", "type": "single", "options": ["Reservoir hosts", "Intensity of survey", "Reservoir host ability to survive", "Prevalence and intensity of infection"], "answer": "Prevalence and intensity of infection"}, {"week": 4, "q": "Mechanism of pathogen crossover across the species depends on?", "type": "single", "options": ["Interaction and intensity of infection in reservoir hosts", "Pathogen release from reservoir hosts", "Only A", "Both A & B"], "answer": "Both A & B"}, {"week": 4, "q": "What is pathogen pressure?", "type": "single", "options": ["Amount of pathogen that is available to cause disease", "Pathogen needed to maintain infection", "Amount of a pathogen available to humans at a given point in time and space", "None of the above"], "answer": "Amount of a pathogen available to humans at a given point in time and space"}, {"week": 4, "q": "What are the factors determining probability of infection?", "type": "single", "options": ["Structural barriers", "Replication and dissemination", "Innate immune response", "All the above"], "answer": "All the above"}, {"week": 4, "q": "Successful exposure of some pathogen requires", "type": "single", "options": ["Replication and dissemination", "Gaps in all the barriers along within a same space and time", "Only human exposure", "Human exposure and replication"], "answer": "Gaps in all the barriers along within a same space and time"}, {"week": 4, "q": "Dissemination of Coccidioides is dependent on?", "type": "single", "options": ["Survival in the soil", "Spread of aerosolised pathogen by wind", "Animal size", "Drinking contaminated water"], "answer": "Spread of aerosolised pathogen by wind"}, {"week": 4, "q": "Occurrence of rabies is restricted by", "type": "single", "options": ["Reservoir distribution and density", "Pathogen prevalence, infection intensity, pathogen release and pathogen survival", "Human exposure", "Wild host barriers"], "answer": "Pathogen prevalence, infection intensity, pathogen release and pathogen survival"}, {"week": 4, "q": "New era of infectious diseases is aided by", "type": "single", "options": ["Globalization", "Urbanization", "Climate change", "All the above"], "answer": "All the above"}, {"week": 4, "q": "Impact of urbanization on infectious diseases include all EXCEPT", "type": "single", "options": ["Urban expansion and land usage leading to human wildlife interaction", "More prevalence outbreak of respiratory infections", "Poor access to health care", "Vectors adapting to urban settings"], "answer": "Poor access to health care"}, {"week": 4, "q": "Public Health Disease Surveillance is defined as", "type": "single", "options": ["All information available at right time and in right place to inform public health action", "Information for action", "Both A & B", "None of the above"], "answer": "Both A & B"}, {"week": 4, "q": "Challenges for Public health surveillance in India include", "type": "single", "options": ["Lack of mechanism to integrate surveillance data", "Limited laboratory infrastructure and trained manpower", "Challenges in linking data with outbreaks", "All the above"], "answer": "All the above"}, {"week": 4, "q": "The common sources of Public health surveillance data in India includes all except", "type": "single", "options": ["IDSP", "VRDL", "SRS", "NVBDCP"], "answer": "SRS"}, {"week": 4, "q": "Whole genome sequencing", "type": "single", "options": ["Divides the organism into several genetic codes", "Lays out the entire nucleotide sequence and get a full genetic code of a particular organism", "Uses electron microscope for detailed visualization", "None of the above"], "answer": "Lays out the entire nucleotide sequence and get a full genetic code of a particular organism"}, {"week": 4, "q": "Most important use of Whole Genome Sequencing in Public Health Surveillance includes", "type": "single", "options": ["Rapid detection of pathogen variants", "Tracking emerging variants", "Animal-human crossover of pathogen", "All the above"], "answer": "All the above"}];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function normalize(s) {
+  return String(s || "").trim().toLowerCase().replace(/\s+/g, " ").replace(/[\u2019']/g, "'");
+}
+
+const questions = shuffle(quizData);
+const form = document.getElementById("quizForm");
+document.getElementById("metaLine").textContent = `${questions.length} questions loaded. Questions and options are shuffled on each refresh.`;
+
+function render() {
+  form.innerHTML = "";
+  questions.forEach((item, idx) => {
+    const card = document.createElement("div");
+    card.className = "question-card";
+    const weekLabel = item.week ? `Week ${item.week}` : "Question";
+    let inner = `
+      <div class="qtop">
+        <p class="qtitle">${idx + 1}) ${item.q}</p>
+        <div class="week-badge">${weekLabel}</div>
+      </div>
+    `;
+
+    if (item.type === "multi") {
+      const opts = shuffle(item.options || []);
+      inner += `<div class="options">`;
+      opts.forEach((opt) => {
+        inner += `<label class="opt"><input type="checkbox" name="q${idx}" value="${escapeHtml(opt)}"> <span>${escapeHtml(opt)}</span></label>`;
+      });
+      inner += `</div>`;
+    } else if (item.type === "text") {
+      inner += `<input class="text-answer" type="text" name="q${idx}" placeholder="Type your answer here" autocomplete="off" />`;
+    } else {
+      const opts = shuffle(item.options || []);
+      inner += `<div class="options">`;
+      opts.forEach((opt) => {
+        inner += `<label class="opt"><input type="radio" name="q${idx}" value="${escapeHtml(opt)}"> <span>${escapeHtml(opt)}</span></label>`;
+      });
+      inner += `</div>`;
+    }
+
+    inner += `
+      <div class="result" id="r${idx}"></div>
+      <div class="note" id="n${idx}"></div>
+    `;
+    card.innerHTML = inner;
+    form.appendChild(card);
+  });
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function compareMulti(selected, expected) {
+  const a = [...new Set(selected.map(normalize))].sort();
+  const b = [...new Set(expected.map(normalize))].sort();
+  if (a.length !== b.length) return false;
+  return a.every((v, i) => v === b[i]);
+}
+
+function submitQuiz() {
+  let score = 0;
+  let correct = 0, wrong = 0, blank = 0;
+
+  questions.forEach((item, idx) => {
+    const res = document.getElementById(`r${idx}`);
+    const note = document.getElementById(`n${idx}`);
+
+    if (item.type === "multi") {
+      const checked = [...document.querySelectorAll(`input[name="q${idx}"]:checked`)].map(el => el.value);
+      const ok = compareMulti(checked, item.answers || []);
+      if (checked.length === 0) {
+        blank++;
+        res.textContent = `❌ Not Answered | Correct: ${item.answers.join(", ")}`;
+        res.className = "result wrong";
+      } else if (ok) {
+        score++; correct++;
+        res.textContent = "✅ Correct";
+        res.className = "result correct";
+      } else {
+        wrong++;
+        res.textContent = `❌ Wrong | Correct: ${item.answers.join(", ")}`;
+        res.className = "result wrong";
+      }
+      note.style.display = "block";
+      note.textContent = `Select all correct options.`;
+      return;
+    }
+
+    if (item.type === "text") {
+      const inp = document.querySelector(`input[name="q${idx}"]`);
+      const val = normalize(inp ? inp.value : "");
+      const ans = normalize(item.answer);
+      if (!val) {
+        blank++;
+        res.textContent = `❌ Not Answered | Correct: ${item.answer}`;
+        res.className = "result wrong";
+      } else if (val === ans) {
+        score++; correct++;
+        res.textContent = "✅ Correct";
+        res.className = "result correct";
+      } else {
+        wrong++;
+        res.textContent = `❌ Wrong | Correct: ${item.answer}`;
+        res.className = "result wrong";
+      }
+      note.style.display = "block";
+      note.textContent = `Type answer: ${item.answer}`;
+      return;
+    }
+
+    const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+    if (!selected) {
+      blank++;
+      res.textContent = `❌ Not Answered | Correct: ${item.answer}`;
+      res.className = "result wrong";
+    } else if (normalize(selected.value) === normalize(item.answer)) {
+      score++; correct++;
+      res.textContent = "✅ Correct";
+      res.className = "result correct";
+    } else {
+      wrong++;
+      res.textContent = `❌ Wrong | Correct: ${item.answer}`;
+      res.className = "result wrong";
+    }
+    note.style.display = "none";
+  });
+
+  const total = questions.length;
+  document.getElementById("scoreBox").innerHTML =
+    `Final Score: ${score} / ${total} <span class="scoredetails">Correct: ${correct} &nbsp;|&nbsp; Wrong: ${wrong} &nbsp;|&nbsp; Not Answered: ${blank}</span>`;
+  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+}
+
+function resetQuiz() {
+  render();
+  document.getElementById("scoreBox").textContent = "Submit the quiz to see your score.";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+render();
+</script>
+</body>
+</html>

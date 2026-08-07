@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One Health Assignments</title>
+  <style>
+    :root{
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --shadow:0 8px 24px rgba(0,0,0,.06);
+      --border:#e5e7eb;
+      --accent:#111827;
+      --soft:#eef2ff;
+      --softText:#3730a3;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+      padding:28px 18px 48px;
+    }
+    header{
+      text-align:center;
+      padding:18px 0 26px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:clamp(30px,4vw,52px);
+      line-height:1.05;
+      color:#000;
+      font-weight:800;
+    }
+    .subtitle{
+      margin:0 auto;
+      max-width:820px;
+      font-size:15px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+    .section-label{
+      margin: 6px 0 14px;
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:var(--muted);
+      font-weight:700;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:18px;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:22px 20px 20px;
+      display:flex;
+      flex-direction:column;
+      min-height:220px;
+    }
+    .card.active{
+      border-color:#dbe2ff;
+      background:linear-gradient(180deg,#ffffff 0%,#fbfcff 100%);
+    }
+    .year{
+      display:inline-flex;
+      align-self:flex-start;
+      background:var(--soft);
+      color:var(--softText);
+      border-radius:999px;
+      padding:7px 11px;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.04em;
+      margin-bottom:14px;
+    }
+    .title{
+      font-size:22px;
+      line-height:1.35;
+      margin:0 0 10px;
+      font-weight:800;
+      color:#111;
+    }
+    .desc{
+      margin:0 0 18px;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:14px;
+      flex:1;
+    }
+    .meta{
+      font-size:13px;
+      color:#374151;
+      margin:0 0 16px;
+      font-weight:700;
+    }
+    a.btn, .btn-disabled{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      padding:13px 16px;
+      border-radius:12px;
+      text-decoration:none;
+      font-size:15px;
+      font-weight:800;
+      border:1px solid transparent;
+    }
+    a.btn{
+      background:var(--accent);
+      color:#fff;
+    }
+    a.btn:hover{opacity:.92}
+    .btn-disabled{
+      background:#e5e7eb;
+      color:#6b7280;
+      cursor:not-allowed;
+    }
+    .footer-note{
+      margin-top:18px;
+      font-size:13px;
+      color:var(--muted);
+      text-align:center;
+    }
+    @media (max-width:640px){
+      .card{min-height:unset}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>2023 One Health Assignments</h1>
+      <p class="subtitle">Select a year to open the quiz set. The 2023 assignment quiz is ready and fully interactive. More year-based quizzes can be added here later with the same structure.</p>
+    </header>
+
+    <div class="section-label">Available quizzes</div>
+    <div class="grid">
+      <div class="card active">
+        <div class="year">2023</div>
+        <div class="title">One Health Assignments</div>
+        <p class="desc">Week-wise MCQ practice set with shuffled questions, shuffled options, and instant right/wrong feedback after submit.</p>
+        <div class="meta">132 questions</div>
+        <a class="btn" href="./2023-one-health-assignments.html">Open quiz</a>
+      </div>
+
+      <div class="card">
+        <div class="year">2024</div>
+        <div class="title">One Health Assignments</div>
+        <p class="desc">Placeholder for the next year’s question bank.</p>
+        <div class="meta">Coming soon</div>
+        <div class="btn-disabled">Not available yet</div>
+      </div>
+
+      <div class="card">
+        <div class="year">2025</div>
+        <div class="title">One Health Assignments</div>
+        <p class="desc">Placeholder for a future question bank.</p>
+        <div class="meta">Coming soon</div>
+        <div class="btn-disabled">Not available yet</div>
+      </div>
+    </div>
+
+    <div class="footer-note">GitHub Pages ready. To add another year, copy the quiz page and link it here.</div>
+  </div>
+</body>
+</html>
