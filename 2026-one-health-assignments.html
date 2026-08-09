@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2023 One Health Assignments</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --shadow: 0 4px 12px rgba(0,0,0,.05);
+      --green: #118a3a;
+      --red: #c0262d;
+      --button: #111827;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+    }
+    header {
+      text-align: center;
+      padding: 6px 0 20px;
+    }
+    h1 {
+      font-size: clamp(30px, 3.8vw, 52px);
+      line-height: 1.1;
+      margin: 8px 0 6px;
+      font-weight: 800;
+      color: #000;
+    }
+    .subtitle {
+      margin: 0 auto;
+      max-width: 880px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 18px 0 24px;
+    }
+    button, .link-btn {
+      appearance: none;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .08s ease, opacity .2s ease, background .2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button:active, .link-btn:active { transform: translateY(1px); }
+    .btn-primary { background: var(--button); color: #fff; }
+    .btn-secondary { background: #e5e7eb; color: #111827; }
+    .meta {
+      text-align: center;
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    form {
+      display: grid;
+      gap: 18px;
+    }
+    .question-card {
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      border: 1px solid #f0f0f0;
+      padding: 18px 18px 14px;
+    }
+    .qtop {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+    .qtitle {
+      font-size: 18px;
+      line-height: 1.55;
+      margin: 0;
+      font-weight: 500;
+    }
+    .week-badge {
+      flex: 0 0 auto;
+      font-size: 12px;
+      background: #eef2ff;
+      color: #3730a3;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    .options {
+      display: grid;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    label.opt {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 16px;
+      line-height: 1.45;
+      cursor: pointer;
+      user-select: none;
+    }
+    label.opt input {
+      margin-top: 4px;
+      transform: scale(1.05);
+      flex: 0 0 auto;
+    }
+    .text-answer {
+      width: min(420px, 100%);
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+    .text-answer:focus {
+      border-color: #9ca3af;
+      box-shadow: 0 0 0 3px rgba(17,24,39,.08);
+    }
+    .result {
+      margin-top: 12px;
+      font-weight: 700;
+      min-height: 24px;
+      font-size: 15px;
+    }
+    .correct { color: var(--green); }
+    .wrong { color: var(--red); }
+    .note {
+      display: none;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #374151;
+      background: #f9fafb;
+      border: 1px dashed #e5e7eb;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .scorebox {
+      margin-top: 20px;
+      padding: 16px 18px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .scoredetails {
+      display: block;
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .sticky-submit {
+      position: sticky;
+      bottom: 14px;
+      z-index: 5;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+      margin-top: 10px;
+    }
+    .sticky-submit button {
+      pointer-events: auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,.12);
+    }
+    @media (max-width: 700px) {
+      .qtitle { font-size: 17px; }
+      label.opt { font-size: 15px; }
+      .question-card { padding: 16px 14px 12px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>2023 One Health Assignments</h1>
+    <p class="subtitle">Interactive quiz with shuffled questions, instant scoring, and correct/wrong feedback after submission.</p>
+  </header>
+
+  <div class="toolbar">
+    <a class="link-btn btn-secondary" href="./index.html">Home</a>
+    <button class="btn-primary" type="button" onclick="submitQuiz()">Submit</button>
+    <button class="btn-secondary" type="button" onclick="resetQuiz()">Reset</button>
+  </div>
+
+  <div class="meta" id="metaLine"></div>
+  <form id="quizForm"></form>
+
+  <div class="sticky-submit">
+    <button class="btn-primary" type="button" onclick="submitQuiz()">Submit</button>
+  </div>
+
+  <div class="scorebox" id="scoreBox">Submit the quiz to see your score.</div>
+</div>
+
+<script>
+const quizData = [{"week":1,"q":"Which of the following statements is true for One Health?","type":"single","options":["It simplifies healthcare by focusing only on human health.","It helps prevent and control diseases at the human-animal environment interface.","Its primary goal is to cure diseases in domestic animals.","It's a concept limited to veterinary medicine."],"answer":"It helps prevent and control diseases at the human-animal environment interface."},{"week":1,"q":"Which department comes under One Health?","type":"single","options":["Animal Health","Human Health","Environmental Health","All of the above"],"answer":"All of the above"},{"week":1,"q":"The Quadripartite was made to strengthen the Global One Health Governance. When was it formed?","type":"single","options":["2020","2021","2022","2023"],"answer":"2022"},{"week":1,"q":"Name the German scholar from the mid 1800’s, who was an early proponent of One Health?","type":"single","options":["Rudolf Virchow","Calvin Schwabe","Lonnie King","None of the above"],"answer":"Rudolf Virchow"},{"week":1,"q":"In the Disciplinarity Jargon, which Disciplinary represents a Mixed-Up Salad?","type":"single","options":["Interdisciplinary","Multidisciplinary","Intradisciplinary","Cross-disciplinary"],"answer":"Multidisciplinary"},{"week":1,"q":"In the ABC of Applying the Principles of Ethics, A stands for ? ","type":"text","answer":"Apophenia"},{"week":1,"q":"Which of the following statements is true for One Health?","type":"single","options":["It simplifies healthcare by focusing only on human health.","It helps prevent and control diseases at the human-animal environment interface.","Its primary goal is to cure diseases in domestic animals.","It's a concept limited to veterinary medicine."],"answer":"It helps prevent and control diseases at the human-animal environment interface."},{"week":1,"q":"Which of these have raised the urgency towards One Health Approach?","type":"single","options":["Increase in Zoonotic disease Outbreaks.","Increase in Food Borne Diseases.","Rise in Anti-Microbial Resistance.","All of the above."],"answer":"All of the above."},{"week":1,"q":"Which of these is a Fundamental Principle of Ethics?","type":"single","options":["Beneficence","Non-maleficence","Autonomy","All of the above"],"answer":"All of the above"},{"week":1,"q":"What does WOHC stand for in the context of One Health?","type":"single","options":["World Organization for Health and Care","Women's Occupational Health Center","World Obesity and Heart Center","World One Health Congress"],"answer":"World One Health Congress"},{"week":2,"q":"Which of the following statements is true for H1N1 virus?","type":"single","options":["There was a major outbreak of H1N1 in the year 2009","The source of the outbreak could not be found","The outbreak affected all parts of the world","All of the above"],"answer":"All of the above"},{"week":2,"q":"Which year of the following saw the most cases of EBOLA outbreaks?","type":"single","options":["2014","2015","2016","2019"],"answer":"2014"},{"week":2,"q":"The highest level of Biosafety Lab-4 is situated in which area?","type":"single","options":["Pune","Nagpur","Bhubaneswar","Delhi"],"answer":"Pune"},{"week":2,"q":"Which of the following is NOT an impact of Epidemics?","type":"single","options":["School dropouts","Political instability","Rise in employment","Increase crime rates"],"answer":"Rise in employment"},{"week":2,"q":"Global One Health Joint Action Plan was published on?","type":"single","options":["17.10.2022","18.10.2022","19.10.2022","20.10.2022"],"answer":"17.10.2022"},{"week":2,"q":"The Key for One Health is ?","type":"single","options":["Collaborating","Communicating","Coordinating","All of the above"],"answer":"All of the above"},{"week":2,"q":"At the time when the pathogen is spilling over through vector, wildlife or domestic animals, which process will help prevent this?","type":"single","options":["Rapid response","Early detection","Forecasting Readiness","Controlled operations"],"answer":"Early detection"},{"week":2,"q":"What is the full form of ICMR-NIV, Pune?","type":"single","options":["Indian Council of Medical Research- National Institute of Veterinary, Pune","Indian Council of Medical Research- National Institute of Virology, Pune","Indian Council of Mass Research- National Institute of Velocity, Pune","Indian Cancer Medical Research- National Institute of Virology, Pune"],"answer":"Indian Council of Medical Research- National Institute of Virology, Pune"},{"week":2,"q":"Out of these States, which one had repeated outbreaks of the NIPAH virus?","type":"single","options":["Odisha","Kerala","Karnataka","Maharashtra"],"answer":"Kerala"},{"week":2,"q":"How many mobile BSL-3 labs do we have in India?","type":"single","options":["13","16","17","19"],"answer":"16"},{"week":3,"q":"In the list of 21st century emerging disease outbreaks, ‘H1N1 virus’ came in which year?","type":"single","options":["2009","2010","2011","2012"],"answer":"2009"},{"week":3,"q":"Which of these conditions does NOT qualify as emerging disease?","type":"single","options":["A disease appearing in a place for the first time","A disease spreading to new areas","A disease which is affecting uniform number of individuals for some years","A disease which was not known earlier"],"answer":"A disease which is affecting uniform number of individuals for some years"},{"week":3,"q":"What is the full form of NIAID?","type":"single","options":["National Institute of Allergy and Infectious Diseases","National Institute of Allergy and Informed Diseases","National Institute of Energy and Infectious Diseases","National Institute of Emerging and Infectious Diseases"],"answer":"National Institute of Allergy and Infectious Diseases"},{"week":3,"q":"Which of the following are NOT major reservoirs of 21st century outbreaks?","type":"single","options":["Camels","Bats","Poultry","Elephants"],"answer":"Elephants"},{"week":3,"q":"Which among the following are factors contributing to disease emergence?","type":"single","options":["Climate change","Urbanization","Displacement","All of the above"],"answer":"All of the above"},{"week":3,"q":"The method through which several rounds of enquiries for expert opinion is carried out mostly through anonymous forms/questionnaires is called?","type":"single","options":["Opinion poll","Risk matrix","Analytic hierarchy","Delphi"],"answer":"Delphi"},{"week":3,"q":"Human behaviour comes under which of the players in the disease emergence?","type":"single","options":["Host","Agent","Environment","All of the above"],"answer":"Host"},{"week":3,"q":"Which among the following is a component of risk assessment?","type":"single","options":["Risk identification","Risk evaluation","Risk analysis","All of the above"],"answer":"All of the above"},{"week":3,"q":"Which method for risk assessment is used when there is a lack of necessary data?","type":"single","options":["Expert Consultation method","Delphi method","Analytic hierarchy process","Risk matrix method"],"answer":"Analytic hierarchy process"},{"week":3,"q":"Diseases which are associated with intent to harm, including mass bioterrorism is called?","type":"single","options":["Re-emerging infectious diseases","Deliberately emerging infectious diseases","De-emerging infectious diseases","None of the above"],"answer":"Deliberately emerging infectious diseases"},{"week":4,"q":"Covid-19 pandemic outbreak began in which year in INDIA?","type":"single","options":["2019","2020","2021","2022"],"answer":"2020"},{"week":4,"q":"Virus transmitted from a wild animal to mosquito which then transmits it to a human host. This is an example of which kind of zoonotic spillover?","type":"single","options":["Direct Spillover","Intermediate by vertebrate","Intermediate by invertebrate","Environment Spillover"],"answer":"Intermediate by invertebrate"},{"week":4,"q":"What is \"pathogen pressure\" as defined in the slide?","type":"single","options":["The resistance of a human to a pathogen","The number of humans infected by a pathogen","The amount of a pathogen available to humans at a given point in time and space","The immune response triggered by pathogens"],"answer":"The amount of a pathogen available to humans at a given point in time and space"},{"week":4,"q":"New era of infectious diseases is aided by?","type":"single","options":["Globalisation","Urbanization","Climate change","All the above"],"answer":"All the above"},{"week":4,"q":"What happens if any of the barriers to crossover are impenetrable?","type":"single","options":["Spillover will occur easily","The pathogen will mutate","Spillover cannot occur","The pathogen becomes harmless"],"answer":"Spillover cannot occur"},{"week":4,"q":"What is the full form of NVBDCP?","type":"single","options":["National Vector Borna Disease Control Program","National Viral Borne Disease Control Program","National Vector Borne Disease Control Program","National Vector Borne Disease Cell Program"],"answer":"National Vector Borne Disease Control Program"},{"week":4,"q":"What is the primary goal of Public Health Disease Surveillance according to the slide?","type":"single","options":["To treat diseases in hospitals","To store patient records securely","To ensure the right information is available at the right time and place to guide public health decisions","To conduct random health checks on citizens"],"answer":"To ensure the right information is available at the right time and place to guide public health decisions"},{"week":4,"q":"Which of the following statements is true for Integrated Health Information Platform?","type":"single","options":["The Integrated Health Information Platform (IHIP) is a recent development in the already existing Integrated Disease Surveillance Programme (IDSP).","The Integrated Health Information Platform (IHIP) was launched due to the failure of existing Integrated Disease Surveillance Programme (IDSP).","The IHIP and IDSP were launched in the same year","None of the above"],"answer":"The Integrated Health Information Platform (IHIP) is a recent development in the already existing Integrated Disease Surveillance Programme (IDSP)."},{"week":4,"q":"What is one major challenge in integrating public health surveillance data in India?","type":"single","options":["Lack of international funding","Working in silos without a mechanism for data integration","Overuse of digital tools","Too many private hospitals"],"answer":"Working in silos without a mechanism for data integration"},{"week":4,"q":"Which of the following can be considered as a gap in the current health system approaches?","type":"single","options":["Vacancies in District Public Health Labs","Delays in lab confirmation on outbreaks","Lack of advance technology being used to detect outbreaks","All of the above"],"answer":"All of the above"},{"week":5,"q":"Which of the following parasites causes zoonotic malaria infections in parts of south-east Asia?","type":"single","options":["Plasmodium berghei","Plasmodium ovale","Plasmodium malariae","Plasmodium knowlesi"],"answer":"Plasmodium knowlesi"},{"week":5,"q":"According to the slide, What percentage of infectious diseases are estimated to be vector-borne?","type":"single","options":["Approximately 17%","Around 25%","Approximately 50%","Around 75%"],"answer":"Approximately 17%"},{"week":5,"q":"What is the causative agent of Japanese encephalitis?","type":"single","options":["Influenza virus","Japanese encephalitis virus (JEV)","Dengue virus","Herpes simplex virus"],"answer":"Japanese encephalitis virus (JEV)"},{"week":5,"q":"What does MRSA stand for?","type":"single","options":["Methicillin-Resistant Strep Infection","Methicillin-Resistant Staphylococcus aureus","Multi-Resistant Staphylococcus Ailment","Methicillin-Resistant Streptococcus Anginous"],"answer":"Methicillin-Resistant Staphylococcus aureus"},{"week":5,"q":"Scrub typus is caused by which bacteria?","type":"single","options":["Rickettsia rickettsia","Orientia tsutsugamushi","Borrelia burgdorferi","Anaplasma phagocytophilum"],"answer":"Orientia tsutsugamushi"},{"week":5,"q":"Which of the following factors is a biological driver of emerging infectious diseases?","type":"single","options":["Globalization","Climate change","Evolution of pathogens","Urbanization"],"answer":"Evolution of pathogens"},{"week":5,"q":"Fill in the blank; WHO Global Vector Control Response 2017- ___ plan","type":"single","options":["2022","2032","2030","2025"],"answer":"2030"},{"week":5,"q":"Why was the 2009 H1N1 influenza able to cause a pandemic?","type":"single","options":["It originated from birds with high mortality","It did not cross over to humans","It spread rapidly after crossing over from pigs","It was resistant to all known vaccines"],"answer":"It spread rapidly after crossing over from pigs"},{"week":5,"q":"Which of the following is not a social driver of emerging infectious diseases?","type":"single","options":["Social disruption due to conflict","Climate change","Globalization of food manufacturing","Overcrowding in urban areas"],"answer":"Climate change"},{"week":5,"q":"How many species of Anopheles Mosquitoes are found in India?","type":"single","options":["44","45","46","47"],"answer":"45"},{"week":6,"q":"What is the main purpose of the Food Safety and Standards Act, 2006?","type":"single","options":["To promote agricultural production","To regulate the manufacturing of drugs","To consolidate food laws and ensure safe food for human consumption","To control prices of food in the market"],"answer":"To consolidate food laws and ensure safe food for human consumption"},{"week":6,"q":"Which of the following is true to Antimicrobial Stewardship Program?","type":"single","options":["There a set of Coordinated Interventions","Ensure patient's optimal treatment","Reduce inappropriate use of antibiotics","All of the above"],"answer":"All of the above"},{"week":6,"q":"Which of the following is an example of Chemical Hazard?","type":"single","options":["Bacteria","Cigrattes","Glass","Adulterants"],"answer":"Adulterants"},{"week":6,"q":"The Antimicrobial Resistance Surveillance and Research Network (AMRSN) initiative was launched in the year?","type":"single","options":["2013","2014","2015","2016"],"answer":"2013"},{"week":6,"q":"What is a common source of E. coli contamination?","type":"single","options":["Canned vegetables","Undercooked meat and unpasteurized milk","Raw eggs","Frozen fruits"],"answer":"Undercooked meat and unpasteurized milk"},{"week":6,"q":"What is Antibiotic Stewardship?","type":"single","options":["Promotion of antibiotic use in healthcare settings","Restricting use of antibiotic in healthcare settings","A coordinated effort to optimize the use of antibiotics to treat infections and reduce the development of antibiotic resistance.","Encouraging over-the-counter sale of antibiotic"],"answer":"A coordinated effort to optimize the use of antibiotics to treat infections and reduce the development of antibiotic resistance."},{"week":6,"q":"In which year was the Food Safety and Standards Act enacted in India?","type":"single","options":["2005","2006","2007","2008"],"answer":"2006"},{"week":6,"q":"How will the collaboration help improve outbreak response for AMR infections?","type":"single","options":["By banning all antibiotics in hospitals","By enhancing laboratory surveillance of AMR pathogens","By closing small healthcare centers","By outsourcing healthcare to private providers"],"answer":"By enhancing laboratory surveillance of AMR pathogens"},{"week":6,"q":"Foodborne illnesses caused by bacteria, viruses, parasites, and fungi are examples of____","type":"single","options":["Physical hazards","Chemical hazards","Biological hazards","Radiological hazards"],"answer":"Biological hazards"},{"week":6,"q":"Food Safety is fundamental to which of the following Sustainable Development Goals?","type":"single","options":["1","8","12","All of the above"],"answer":"All of the above"},{"week":7,"q":"What is essential for successful public health interventions according to the One Health approach?","type":"single","options":["Individual treatment plans","Cooperation between doctors only","Cooperation of human, animal, and environmental health partners","Increased use of technology"],"answer":"Cooperation of human, animal, and environmental health partners"},{"week":7,"q":"WHO identifies five phases of infectious disease emergence. Which of the following are in the correct order?","type":"single","options":["Pre-emergence, Epidemic, Emergence, Localised Transmission, Pandemic","Pre-emergence, Emergence, Localised Transmission, Pandemic, Epidemic","Pre-emergence, Emergence, Localised Transmission, Epidemic, Pandemic","Pre-emergence, Pandemic, Emergence, Localised Transmission, Epidemic"],"answer":"Pre-emergence, Emergence, Localised Transmission, Epidemic, Pandemic"},{"week":7,"q":"Where and when was KFD first identified?","type":"single","options":["In a human in Kerala, 1965","In a sick monkey in Kyasanur Forest of Karnataka, 1957","In a deer in Tamil Nadu, 1975","In a rat in Maharashtra, 1962"],"answer":"In a sick monkey in Kyasanur Forest of Karnataka, 1957"},{"week":7,"q":"Which of the following strategies are needed for successful implementation of multi-sectoral One Health Initiatives?","type":"single","options":["Strong political will and commitment","Inter-sectoral collaboration","Adequate funding","All of the above"],"answer":"All of the above"},{"week":7,"q":"Which of these modes is a direct transfer of zoonotic disease?","type":"single","options":["Saliva","Blood","Mucous","All of the above"],"answer":"All of the above"},{"week":7,"q":"One Health recommends public and animal health systems that are?","type":"single","options":["Focused only on emergency care","Based on ancient traditional medicine","Compliant with international standards with long-term intervention goals","Limited to private institutions"],"answer":"Compliant with international standards with long-term intervention goals"},{"week":7,"q":"OHHLEP stands for?","type":"single","options":["One Health Huge-Level Expert Panel","One Health High-Level Expert Panel","One Health Healthy-Level Expert Panel","One Health Human-Level Expert Panel"],"answer":"One Health High-Level Expert Panel"},{"week":7,"q":"Why is strengthening national and international emergency response important under One Health?","type":"single","options":["To promote economic growth","To reduce public spending","To prevent and control disease outbreaks","To limit population movement"],"answer":"To prevent and control disease outbreaks"},{"week":7,"q":"How does the 'One Health' approach benefit future health systems?","type":"single","options":["It eliminates the need for human medicine","It focuses only on economic development","It helps prevent pandemics and builds more resilient and equitable systems","It focuses solely on urban healthcare infrastructure"],"answer":"It helps prevent pandemics and builds more resilient and equitable systems"},{"week":7,"q":"Which interface is emphasized for preventive action in the One Health strategy?","type":"single","options":["Human-technology interface","Human-animal-ecosystem interface","Animal-laboratory interface","Hospital-community interface"],"answer":"Human-animal-ecosystem interface"},{"week":8,"q":"What are the reasons for ‘One Health’ attention in India?","type":"single","options":["21.54% of area is forested of the country","Increasing consumption of antibiotics","Huge wet market sector and industrial animal trade","All of the above"],"answer":"All of the above"},{"week":8,"q":"A zoonotic infection/disease is ____.","type":"single","options":["an infection or disease that can be transmitted from an insect to another insect","an infection or disease that can be transmitted from an animal to an insect","an infection or disease that can be transmitted from an animal to another animal","an infection or disease that can be transmitted from an animal to a human"],"answer":"an infection or disease that can be transmitted from an animal to a human"},{"week":8,"q":"Partnerships, governance and workforce development, resource allocation and leadership are all required for:","type":"single","options":["Individual development","Community participation","Capacity building","Health Education"],"answer":"Community participation"},{"week":8,"q":"In the levels of community participation, ‘Community-owned’ is which level?","type":"single","options":["Level 1","Level 2","Level 3","Level 4"],"answer":"Level 4"},{"week":8,"q":"This approach to community participation is based on the assumption that humans are rational decision-makers, this approach relies heavily upon the provision of information about risks and benefits of certain behaviors.","type":"single","options":["Behavior change approach","Community development approach","Biomedical approach","None of these"],"answer":"Behavior change approach"},{"week":8,"q":"What are the principals of Community participation?","type":"single","options":["Trust, accessibility","Contextualization, autonomy","Equity, transparency","All of the above"],"answer":"All of the above"},{"week":8,"q":"Which of the following is not a principle of community engagement process?","type":"single","options":["Equity","Trust","Direction","Autonomy"],"answer":"Direction"},{"week":8,"q":"First outbreak of Nipah was reported in which year","type":"single","options":["2015","2017","2018","2021"],"answer":"2018"},{"week":8,"q":"NOHP-PCZ full form is?","type":"single","options":["National One Health Programme for Prevention and Control of Zoonoses","National One Health Parameter for Prevention and Control of Zoonoses","National One Health Programme for Precaution and Control of Zoonoses","National One Health Programme for Prevention and Combat of Zoonoses"],"answer":"National One Health Programme for Prevention and Control of Zoonoses"},{"week":8,"q":"_____ approach to health promotion aims to improve and promote health by addressing socioeconomic and environmental determinants of health within the community.","type":"single","options":["Behavior changes","Community development","Biomedical","None of these"],"answer":"Community development"},{"week":9,"q":"An Index case may or may not be same as the First case?","type":"single","options":["True","False"],"answer":"True"},{"week":9,"q":"Under which category of study design does the cross-sectional come?","type":"single","options":["Observational Analytical","True Experimental","Observational Descriptive","Quasi Experimental"],"answer":"Observational Analytical"},{"week":9,"q":"Choice of the appropriate study design depends on?","type":"single","options":["Research Question","Funds available","Time period available to complete the study","All of the above"],"answer":"All of the above"},{"week":9,"q":"Which one of the following is NOT an observational study design?","type":"single","options":["Ecological study","Cluster randomized trial","Case-control study","Cohort study"],"answer":"Cluster randomized trial"},{"week":9,"q":"What does RRS stand for in the context of emergency medical care?","type":"single","options":["Radiology Reporting System","Rapid Recovery System","Remote Resuscitation System","Rapid Response System"],"answer":"Rapid Response System"},{"week":9,"q":"Which of the following is the apex body for disaster management in India?","type":"single","options":["National Institute of Disaster Management","Ministry of Home Affairs","National Executive Committee","National Disaster Management Authority"],"answer":"National Disaster Management Authority"},{"week":9,"q":"What is a common immediate effect of a natural disaster on a community?","type":"single","options":["Economic growth","Increased tourism","Infrastructure damage","Social harmony"],"answer":"Infrastructure damage"},{"week":9,"q":"Bhopal Gas Tragedy is a kind of","type":"single","options":["Natural disaster","Man-made disaster","Both natural & man-made disaster","None of the above"],"answer":"Man-made disaster"},{"week":9,"q":"What are the steps of an outbreak investigation?","type":"single","options":["Determine existence of outbreak","Search for evidence","Analyse the data gathered","All of the above"],"answer":"All of the above"},{"week":9,"q":"Out of the following which id the correct phases of Rapid Response System?","type":"single","options":["Direction- Activation-Response Assessment-Disposition-Evaluation","Activation-Direction-Response Assessment-Disposition-Evaluation","Direction- Activation-Response Assessment-Evaluation-Disposition","Direction-Response Assessment-Activation-Disposition-Evaluation"],"answer":"Direction- Activation-Response Assessment-Disposition-Evaluation"},{"week":10,"q":"Incidence rate is also called as?","type":"single","options":["Incidence development","Incidence diversion","Incidence density","Incidence desk"],"answer":"Incidence density"},{"week":10,"q":"Prevalence is of two types, point and period prevalence.","type":"single","options":["True","False"],"answer":"True"},{"week":10,"q":"What does the incidence refer to?","type":"single","options":["The occurrence of new cases of disease or injury in a population over an indefinite period of time.","The occurrence of old cases of disease or injury in a population over a specified period of time.","The occurrence of new cases of disease or injury in a population over a specified period of time.","None of the above"],"answer":"The occurrence of new cases of disease or injury in a population over a specified period of time."},{"week":10,"q":"Incidence proportion is also called as-","type":"single","options":["cumulative incidence proportion","initial incidence proportion","final incidence proportion","distributive incidence proportion"],"answer":"cumulative incidence proportion"},{"week":10,"q":"What are the functions of descriptive statistics?","type":"single","options":["to summarize data","to organize data","to simplify data","all the above"],"answer":"all the above"},{"week":10,"q":"Which of the following is a non-probability sampling method?","type":"single","options":["Simple random sampling","Systematic sampling","Cluster sampling","Judgment sampling"],"answer":"Judgment sampling"},{"week":10,"q":"Which of the following steps logically follows data collection, coding, editing, and processing in a research study?","type":"single","options":["Sampling design formulation","Statistical analysis and report writing","Questionnaire pretesting","Hypothesis formulation"],"answer":"Statistical analysis and report writing"},{"week":10,"q":"A sampling frame is?","type":"single","options":["The summary of various techniques of sampling","An outline of all the clusters included in the survey","List of all units in the population from which a sample will be selected","The wooden frame to display tables of random numbers"],"answer":"List of all units in the population from which a sample will be selected"},{"week":10,"q":"Which of the following is the primary goal of transformative research?","type":"single","options":["To ensure that research findings are applicable to all groups within the population","To challenge and address social inequalities faced by marginalized groups","To provide a statistically valid and unbiased representation of the population","To develop theories that apply only to well-represented, dominant groups"],"answer":"To challenge and address social inequalities faced by marginalized groups"},{"week":10,"q":"Of the following sampling methods, which is based on equal probability?","type":"single","options":["Convenience sampling","Quota sampling","Simple random sampling","Snowball sampling"],"answer":"Simple random sampling"},{"week":11,"q":"Policy is ‘the sum total of government action from signals of intent to the final outcomes. This definition is given by:","type":"single","options":["John Mearsheimer","Paul Cairney","Robert Abelson","Alan Abramowitz"],"answer":"Paul Cairney"},{"week":11,"q":"Which of the following is part of the Health Policy Triangle?","type":"single","options":["Agenda Setting","Policy Adoption","Policy Evaluation","All of the above"],"answer":"All of the above"},{"week":11,"q":"In the ‘Health Policy Triangle’, which of the following statements is TRUE?","type":"single","options":["The Content interacts with the Process","The Context interacts with the Process and Content","All three interact with each other","There is no interaction between the three actors"],"answer":"All three interact with each other"},{"week":11,"q":"Agenda Setting is a part of Health Policy Triangle.","type":"single","options":["True","False"],"answer":"True"},{"week":11,"q":"Which of the following statements is not True in case of multi-sectoral framings of One Health?","type":"single","options":["Eco health and one health are one and the same","Eco health and one health are similar but not same","Planetary health and eco health are related but not same","Planetary health and one health are similar but not same"],"answer":"Eco health and one health are one and the same"},{"week":11,"q":"Situational, cultural and structural factors come under which of the following actors under the Health Policy Triangle?","type":"single","options":["Content","Context","Process","All of the above"],"answer":"Context"},{"week":11,"q":"Which of the following statements is True for Health Policy Analysis?","type":"single","options":["Multi-disciplinary approach to public policy","Aims to explain the interaction between institutions, interests and ideas","Both multi-disciplinary approach to public policy & aims to explain the interaction between institutions, interests and ideas","None of these"],"answer":"Both multi-disciplinary approach to public policy & aims to explain the interaction between institutions, interests and ideas"},{"week":11,"q":"Which of the following statements is a definition of Health Policy Analysis?","type":"single","options":["Health policy analysis aims for separating a problem into its constituent parts so as to better understand its whole.","Health policy analysis is a multi-disciplinary approach to public policy that aims to explain the interaction between institutions, interests and ideas in the policy process.","Both A&B","Neither A, nor B"],"answer":"Both A&B"},{"week":11,"q":"The ‘Power Cube’ framework of Gaventa. J has three frameworks. Which of the following is also called place?","type":"single","options":["Levels of power","Spaces of power","Forms of power","None of the above"],"answer":"Levels of power"},{"week":11,"q":"Which of the following statements is true with regard to implementation of One Health?","type":"single","options":["Increased political will act as a facilitator for implementation of One Health","Promoting work with non-profits will boost One Health","Making things work at a decentralized level will benefit One Health","All of the above"],"answer":"All of the above"},{"week":12,"q":"Which of these are the enablers of community engagement?","type":"single","options":["Governance","Leadership","Decision making","All of the above"],"answer":"All of the above"},{"week":12,"q":"What does IEC stand for?","type":"single","options":["Information, education, and communication","Information, education, and community","Involve and engage the community","Instruct, enlighten, and collaborate"],"answer":"Information, education, and communication"},{"week":12,"q":"How can you assess the impact of your social media efforts?","type":"single","options":["Asking all followers","Counting the number of posts made","Evaluate the outcome of your campaign against the intended outcome","Comparing your posts with other accounts"],"answer":"Evaluate the outcome of your campaign against the intended outcome"},{"week":12,"q":"What does the “A” in CUBE-A trick for an effective key message stand for?","type":"single","options":["Attractive","Alarming","Audience-focussed","Aggressive"],"answer":"Audience-focussed"},{"week":12,"q":"_____’s ladder shows the Degree of Citizen Participation in the chapter for community engagement.","type":"single","options":["Albert’s","Pavlo’s","Arnstein’s","Arnstan’s"],"answer":"Arnstein’s"},{"week":12,"q":"Which of the following is NOT a principle of community engagement?","type":"single","options":["Trust","Equity","Leadership","Autonomy"],"answer":"Leadership"},{"week":12,"q":"As per WHO’s Community Engagement guidelines of 2020, there are how many levels of community engagement?","type":"single","options":["3","4","5","6"],"answer":"5"},{"week":12,"q":"How can media help in promoting One Health?","type":"single","options":["Behavior Change","Reinforcement","Change in social norms","All of the above"],"answer":"All of the above"},{"week":12,"q":"Which approach is the most desirable but most difficult community engagement approach among the following?","type":"single","options":["Community-oriented","Community-based","Community-managed","Community-owned"],"answer":"Community-owned"},{"week":12,"q":"Feedback loop is a two-way process of communication.","type":"single","options":["True","False"],"answer":"True"}];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function normalize(s) {
+  return String(s || "").trim().toLowerCase().replace(/\s+/g, " ").replace(/[\u2019']/g, "'");
+}
+
+const questions = shuffle(quizData);
+const form = document.getElementById("quizForm");
+document.getElementById("metaLine").textContent = `${questions.length} questions loaded. Questions and options are shuffled on each refresh.`;
+
+function render() {
+  form.innerHTML = "";
+  questions.forEach((item, idx) => {
+    const card = document.createElement("div");
+    card.className = "question-card";
+    const weekLabel = item.week ? `Week ${item.week}` : "Question";
+    let inner = `
+      <div class="qtop">
+        <p class="qtitle">${idx + 1}) ${item.q}</p>
+        <div class="week-badge">${weekLabel}</div>
+      </div>
+    `;
+
+    if (item.type === "multi") {
+      const opts = shuffle(item.options || []);
+      inner += `<div class="options">`;
+      opts.forEach((opt) => {
+        inner += `<label class="opt"><input type="checkbox" name="q${idx}" value="${escapeHtml(opt)}"> <span>${escapeHtml(opt)}</span></label>`;
+      });
+      inner += `</div>`;
+    } else if (item.type === "text") {
+      inner += `<input class="text-answer" type="text" name="q${idx}" placeholder="Type your answer here" autocomplete="off" />`;
+    } else {
+      const opts = shuffle(item.options || []);
+      inner += `<div class="options">`;
+      opts.forEach((opt) => {
+        inner += `<label class="opt"><input type="radio" name="q${idx}" value="${escapeHtml(opt)}"> <span>${escapeHtml(opt)}</span></label>`;
+      });
+      inner += `</div>`;
+    }
+
+    inner += `
+      <div class="result" id="r${idx}"></div>
+      <div class="note" id="n${idx}"></div>
+    `;
+    card.innerHTML = inner;
+    form.appendChild(card);
+  });
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function compareMulti(selected, expected) {
+  const a = [...new Set(selected.map(normalize))].sort();
+  const b = [...new Set(expected.map(normalize))].sort();
+  if (a.length !== b.length) return false;
+  return a.every((v, i) => v === b[i]);
+}
+
+function submitQuiz() {
+  let score = 0;
+  let correct = 0, wrong = 0, blank = 0;
+
+  questions.forEach((item, idx) => {
+    const res = document.getElementById(`r${idx}`);
+    const note = document.getElementById(`n${idx}`);
+
+    if (item.type === "multi") {
+      const checked = [...document.querySelectorAll(`input[name="q${idx}"]:checked`)].map(el => el.value);
+      const ok = compareMulti(checked, item.answers || []);
+      if (checked.length === 0) {
+        blank++;
+        res.textContent = `❌ Not Answered | Correct: ${item.answers.join(", ")}`;
+        res.className = "result wrong";
+      } else if (ok) {
+        score++; correct++;
+        res.textContent = "✅ Correct";
+        res.className = "result correct";
+      } else {
+        wrong++;
+        res.textContent = `❌ Wrong | Correct: ${item.answers.join(", ")}`;
+        res.className = "result wrong";
+      }
+      note.style.display = "block";
+      note.textContent = `Select all correct options.`;
+      return;
+    }
+
+    if (item.type === "text") {
+      const inp = document.querySelector(`input[name="q${idx}"]`);
+      const val = normalize(inp ? inp.value : "");
+      const ans = normalize(item.answer);
+      if (!val) {
+        blank++;
+        res.textContent = `❌ Not Answered | Correct: ${item.answer}`;
+        res.className = "result wrong";
+      } else if (val === ans) {
+        score++; correct++;
+        res.textContent = "✅ Correct";
+        res.className = "result correct";
+      } else {
+        wrong++;
+        res.textContent = `❌ Wrong | Correct: ${item.answer}`;
+        res.className = "result wrong";
+      }
+      note.style.display = "block";
+      note.textContent = `Type answer: ${item.answer}`;
+      return;
+    }
+
+    const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+    if (!selected) {
+      blank++;
+      res.textContent = `❌ Not Answered | Correct: ${item.answer}`;
+      res.className = "result wrong";
+    } else if (normalize(selected.value) === normalize(item.answer)) {
+      score++; correct++;
+      res.textContent = "✅ Correct";
+      res.className = "result correct";
+    } else {
+      wrong++;
+      res.textContent = `❌ Wrong | Correct: ${item.answer}`;
+      res.className = "result wrong";
+    }
+    note.style.display = "none";
+  });
+
+  const total = questions.length;
+  document.getElementById("scoreBox").innerHTML =
+    `Final Score: ${score} / ${total} <span class="scoredetails">Correct: ${correct} &nbsp;|&nbsp; Wrong: ${wrong} &nbsp;|&nbsp; Not Answered: ${blank}</span>`;
+  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+}
+
+function resetQuiz() {
+  render();
+  document.getElementById("scoreBox").textContent = "Submit the quiz to see your score.";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+render();
+</script>
+</body>
+</html>
