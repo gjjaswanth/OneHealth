@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 One Health Assignments</title>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--text:#111827;--muted:#6b7280;--border:#e5e7eb;--shadow:0 8px 24px rgba(0,0,0,.06);--accent:#111827;--soft:#eef2ff;--softText:#3730a3;--green:#118a3a;--red:#c0262d}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 18px 48px}
+header{text-align:center;padding:16px 0 22px}
+h1{margin:0 0 8px;font-size:clamp(30px,4vw,50px);line-height:1.05;color:#000;font-weight:800}
+.subtitle{margin:0 auto;max-width:850px;font-size:15px;color:var(--muted);line-height:1.6}
+.page-switch{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:4px 0 18px}
+.page-switch button,.week-tabs button,.toolbar button{border:0;border-radius:12px;padding:11px 17px;font-size:14px;font-weight:800;cursor:pointer}
+.page-switch button{background:#e5e7eb;color:#374151}
+.page-switch button.active{background:var(--accent);color:#fff}
+.panel{display:none}
+.panel.active{display:block}
+.week-tabs{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:0 0 18px}
+.week-tabs button{background:#fff;color:#374151;border:1px solid var(--border)}
+.week-tabs button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.toolbar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-secondary{background:#e5e7eb;color:#374151}
+.meta{text-align:center;color:var(--muted);font-size:14px;margin-bottom:18px}
+.quiz{display:grid;gap:16px}
+.question-card{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:20px}
+.qtop{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:13px}
+.qtitle{font-size:17px;line-height:1.55;margin:0;font-weight:600}
+.week-badge{flex:0 0 auto;background:var(--soft);color:var(--softText);border-radius:999px;padding:7px 11px;font-size:12px;font-weight:800;white-space:nowrap}
+.options{display:grid;gap:9px}
+label.opt{display:flex;gap:10px;align-items:flex-start;line-height:1.45;font-size:15px;cursor:pointer}
+label.opt input{margin-top:4px;flex:0 0 auto}
+.result{margin-top:12px;font-size:14px;font-weight:800;min-height:20px}
+.correct{color:var(--green)}
+.wrong{color:var(--red)}
+.scorebox{margin-top:20px;background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:18px;text-align:center;font-size:18px;font-weight:800}
+.scoredetails{display:block;margin-top:8px;color:var(--muted);font-size:14px}
+.sticky-submit{position:sticky;bottom:14px;z-index:5;display:flex;justify-content:center;margin-top:18px;pointer-events:none}
+.sticky-submit button{pointer-events:auto;box-shadow:0 10px 24px rgba(0,0,0,.14)}
+.empty{display:none}
+@media(max-width:640px){
+ .wrap{padding:18px 12px 40px}.question-card{padding:16px}.qtitle{font-size:16px}
+ .qtop{gap:8px}.week-badge{font-size:11px;padding:6px 9px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1>2026 One Health Assignments</h1>
+<p class="subtitle">Interactive week-wise practice with shuffled questions and options, combined quizzes, instant scoring, and correct-answer feedback.</p>
+</header>
+
+<div class="page-switch">
+<button id="page14Btn" class="active" onclick="switchPage('p14')">Weeks 1–4</button>
+<button id="page58Btn" onclick="switchPage('p58')">Weeks 5–8</button>
+</div>
+
+<section id="p14" class="panel active">
+<div class="week-tabs" id="tabs14">
+<button data-view="w1">Week 1</button><button data-view="w2">Week 2</button><button data-view="w3">Week 3</button><button data-view="w4">Week 4</button><button data-view="combined14" class="active">Combined Quiz · Weeks 1–4</button>
+</div>
+<div id="quiz14"></div>
+</section>
+
+<section id="p58" class="panel">
+<div class="week-tabs" id="tabs58">
+<button data-view="w5">Week 5</button><button data-view="w6">Week 6</button><button data-view="w7">Week 7</button><button data-view="w8">Week 8</button><button data-view="combined58" class="active">Combined Quiz · Weeks 5–8</button>
+</div>
+<div id="quiz58"></div>
+</section>
+</div>
+
+<script>
+const quizData = [{"week": 1, "q": "Which event is considered a major milestone in the development of the modern One Health approach?", "options": ["Alma-Ata Declaration (1978)", "Manhattan Principles (2004)", "Ottawa Charter (1986)", "Paris Agreement (2015)"], "answer": "Manhattan Principles (2004)"}, {"week": 1, "q": "The Quadripartite governing One Health consists of:", "options": ["WHO, FAO, WOAH, UNEP", "WHO, UNICEF, UNESCO, FAO", "WHO, CDC, FAO, ICMR", "FAO, UNICEF, UNEP, UNESCO"], "answer": "WHO, FAO, WOAH, UNEP"}, {"week": 1, "q": "Which discipline was described as the \"Father of Veterinary Epidemiology\"?", "options": ["Rudolf Virchow", "William Osler", "Calvin Schwabe", "Robert Koch"], "answer": "Calvin Schwabe"}, {"week": 1, "q": "Which of the following is an example of a One Health application?", "options": ["Integrated surveillance of antimicrobial resistance", "Building hospitals only", "Increasing vaccination of humans only", "Establishing medical colleges only"], "answer": "Integrated surveillance of antimicrobial resistance"}, {"week": 1, "q": "The WHO Tricycle Approach is primarily used for surveillance of:", "options": ["Malaria", "Tuberculosis", "Antimicrobial resistance", "HIV/AIDS"], "answer": "Antimicrobial resistance"}, {"week": 1, "q": "Which cognitive factor in research refers to personal preferences influencing results?", "options": ["Randomization", "Conflict of Interest", "Meta-analysis", "Blinding"], "answer": "Conflict of Interest"}, {"week": 1, "q": "Which unethical research incident falsely linked the MMR vaccine with autism?", "options": ["Tuskegee Study", "Willowbrook Study", "Andrew Wakefield study", "Stanford Prison Experiment"], "answer": "Andrew Wakefield study"}, {"week": 1, "q": "Which of the following is an important challenge in implementing the One Health approach?", "options": ["Excessive collaboration among sectors", "Lack of coordination between medical and veterinary sectors", "Lack of infectious diseases", "Overproduction of vaccines"], "answer": "Lack of coordination between medical and veterinary sectors"}, {"week": 1, "q": "Which disease category is most closely associated with the One Health concept?", "options": ["Genetic disorders", "Nutritional deficiency diseases", "Congenital disorders", "Zoonotic diseases"], "answer": "Zoonotic diseases"}, {"week": 1, "q": "Which statement best describes Global Health?", "options": ["It emphasizes equity and transnational health issues.", "It deals only with environmental conservation.", "It focuses only on diseases within one country.", "It is limited to infectious diseases."], "answer": "It emphasizes equity and transnational health issues."}, {"week": 2, "q": "Which year of the following saw the most cases of EBOLA outbreaks?", "options": ["2014", "2015", "2016", "2019"], "answer": "2014"}, {"week": 2, "q": "One Health emphasizes collaboration between:", "options": ["Multiple disciplines and sectors", "Farmers only", "Doctors only", "Veterinarians only"], "answer": "Multiple disciplines and sectors"}, {"week": 2, "q": "Integrated disease surveillance systems help in:", "options": ["Ignoring animal diseases", "Reducing communication", "Early detection and control of diseases", "Increasing disease spread"], "answer": "Early detection and control of diseases"}, {"week": 2, "q": "Zoonotic diseases are diseases that:", "options": ["Affect only plants", "Spread only in water", "Spread from animals to humans", "Affect only humans"], "answer": "Spread from animals to humans"}, {"week": 2, "q": "What were the significant risk factors involved in the NIPAH virus case?", "options": ["Hospital contact duration of more than 24 hours.", "Being present in the same room with that of the infected person", "Contact with body fluids", "All of the above"], "answer": "All of the above"}, {"week": 2, "q": "Which of the following is a key feature of One Health?", "options": ["Isolation of sectors", "Lack of coordination", "Ignoring environmental factors", "Interdisciplinary collaboration"], "answer": "Interdisciplinary collaboration"}, {"week": 2, "q": "Resource-poor communities benefit from One Health by:", "options": ["Increasing healthcare costs", "Improving disease prevention and control", "Ignoring zoonotic diseases", "Reducing awareness"], "answer": "Improving disease prevention and control"}, {"week": 2, "q": "Emerging infectious diseases are:", "options": ["Non-infectious conditions", "Only genetic disorders", "Old and controlled diseases", "Newly appearing or rapidly increasing diseases"], "answer": "Newly appearing or rapidly increasing diseases"}, {"week": 2, "q": "Disease surveillance means:", "options": ["Ignoring outbreaks", "Vaccination only", "Monitoring and collecting data on diseases", "Treating diseases only"], "answer": "Monitoring and collecting data on diseases"}, {"week": 2, "q": "Out of these States, which one had repeated outbreaks of the NIPAH virus?", "options": ["Odisha", "Kerala", "Karnataka", "Maharashtra"], "answer": "Kerala"}, {"week": 3, "q": "Which of the following best defines an emerging infectious disease?", "options": ["A disease that appears for the first time or rapidly increases in incidence", "A disease only found in animals", "A disease with no treatment", "A disease that has completely disappeared"], "answer": "A disease that appears for the first time or rapidly increases in incidence"}, {"week": 3, "q": "Which of the following is an example of a newly emerging infectious disease?", "options": ["Tuberculosis", "Cholera", "COVID-19", "Malaria"], "answer": "COVID-19"}, {"week": 3, "q": "Re-emerging diseases are those that:", "options": ["Never existed before", "Reappear after decline or control", "Only affect animals", "Are artificially created"], "answer": "Reappear after decline or control"}, {"week": 3, "q": "Which category includes diseases created intentionally for harm?", "options": ["Re-emerging diseases", "De-emerging diseases", "Deliberately emerging diseases", "Accidental diseases"], "answer": "Deliberately emerging diseases"}, {"week": 3, "q": "Which of the following diseases has been eradicated globally?", "options": ["Malaria", "Tuberculosis", "Polio", "Smallpox"], "answer": "Smallpox"}, {"week": 3, "q": "What percentage of emerging infections originate from animals?", "options": ["25%", "50%", "More than two-thirds", "10%"], "answer": "More than two-thirds"}, {"week": 3, "q": "Which of the following is NOT a stage in the pathogen pyramid?", "options": ["Epidemic spread", "Mutation", "Infection", "Exposure"], "answer": "Mutation"}, {"week": 3, "q": "Which factor contributes to disease emergence due to environmental change?", "options": ["Vaccination", "Antibiotic treatment", "Isolation", "Deforestation"], "answer": "Deforestation"}, {"week": 3, "q": "Which method involves multiple rounds of expert consultation for risk assessment?", "options": ["Delphi method", "Experimental method", "Risk matrix method", "Cohort method"], "answer": "Delphi method"}, {"week": 3, "q": "Overestimation of low-risk diseases leads to:", "options": ["Increased immunity", "Waste of resources", "Faster eradication", "Better control"], "answer": "Waste of resources"}, {"week": 4, "q": "Which of the following best defines emerging infectious diseases?", "options": ["Diseases that have been eradicated globally", "Diseases that are newly identified or rapidly increasing in incidence or geographic range", "Diseases that only affect animals", "Diseases that occur only in tropical regions"], "answer": "Diseases that are newly identified or rapidly increasing in incidence or geographic range"}, {"week": 4, "q": "Which of the following is an example of a reemerging disease?", "options": ["Zika virus", "West Nile virus", "Tuberculosis", "COVID-19"], "answer": "Tuberculosis"}, {"week": 4, "q": "In zoonotic spillover, what does \"pathogen pressure\" refer to?", "options": ["The immune response of humans", "The amount of pathogen available to humans at a given time and place", "The mutation rate of pathogens", "The number of animals infected"], "answer": "The amount of pathogen available to humans at a given time and place"}, {"week": 4, "q": "Which mode of zoonotic transmission involves a mosquito acting as a vector?", "options": ["Environmental transmission", "Direct transmission", "Intermediate by vertebrate", "Intermediate by invertebrate"], "answer": "Intermediate by invertebrate"}, {"week": 4, "q": "Which factor has significantly contributed to the rapid spread of infectious diseases in the 21st century?", "options": ["Decrease in global travel", "Improved sanitation", "Reduced urbanization", "Increased global connectivity and air travel"], "answer": "Increased global connectivity and air travel"}, {"week": 4, "q": "What is the primary purpose of public health disease surveillance?", "options": ["To provide treatment to patients", "To collect data for academic research only", "To ensure the right information is available for public health action", "To increase hospital infrastructure"], "answer": "To ensure the right information is available for public health action"}, {"week": 4, "q": "Which program was launched in 2004 to strengthen disease surveillance in India?", "options": ["NIKSHAY", "Integrated Disease Surveillance Project (IDSP)", "NVBDCP", "IHIP"], "answer": "Integrated Disease Surveillance Project (IDSP)"}, {"week": 4, "q": "What is a major gap in current health system approaches in India?", "options": ["Excess laboratory infrastructure", "Integration of surveillance data across sectors", "Over-reliance on genomic sequencing", "Lack of private healthcare providers"], "answer": "Integration of surveillance data across sectors"}, {"week": 4, "q": "Genome sequencing helps in public health by:", "options": ["Treating infections directly", "Increasing vaccine production speed", "Identifying and tracking pathogen mutations", "Reducing hospital costs"], "answer": "Identifying and tracking pathogen mutations"}, {"week": 4, "q": "Approximately what percentage of outbreaks in Maharashtra are detected through laboratory confirmation?", "options": ["5–10%", "15–20%", "30–40%", "50–60%"], "answer": "15–20%"}, {"week": 5, "q": "Which mosquito is the primary vector for malaria?", "options": ["Culex", "Aedes", "Anopheles", "Sandfly"], "answer": "Anopheles"}, {"week": 5, "q": "Which of the following diseases is transmitted by Aedes mosquitoes?", "options": ["Malaria", "Dengue", "Filariasis", "Kala-azar"], "answer": "Dengue"}, {"week": 5, "q": "Scrub typhus is transmitted by which stage of mite?", "options": ["Larval stage (chiggers)", "Pupal stage", "Adult stage", "Egg stage"], "answer": "Larval stage (chiggers)"}, {"week": 5, "q": "Japanese Encephalitis virus is mainly amplified in which animals?", "options": ["Dogs and cats", "Cattle and goats", "Birds and pigs", "Rodents only"], "answer": "Birds and pigs"}, {"week": 5, "q": "Which vector is responsible for transmitting Kala-azar (Visceral leishmaniasis)?", "options": ["Mosquito", "Tick", "Sandfly", "Flea"], "answer": "Sandfly"}, {"week": 5, "q": "Which of the following best defines an emerging infectious disease?", "options": ["A disease that has been eradicated", "A disease affecting only animals", "A disease with decreasing incidence", "A disease that has recently appeared or is rapidly increasing"], "answer": "A disease that has recently appeared or is rapidly increasing"}, {"week": 5, "q": "Which of the following is a biological driver of emerging infectious diseases?", "options": ["Urbanization", "Adaptation and change in microorganisms", "International travel", "Climate change"], "answer": "Adaptation and change in microorganisms"}, {"week": 5, "q": "Which factor helps an infectious disease become endemic or epidemic?", "options": ["Low population density", "Lack of transmission between humans", "Ability to spread from person to person", "Immediate recovery of infected individuals"], "answer": "Ability to spread from person to person"}, {"week": 5, "q": "Which of the following diseases emerged due to a new infectious agent?", "options": ["Tuberculosis", "HIV/AIDS", "Malaria", "Cholera"], "answer": "HIV/AIDS"}, {"week": 5, "q": "Which environmental factor contributes to emerging infectious diseases?", "options": ["Improved sanitation", "Reduced population density", "Limited travel", "Deforestation"], "answer": "Deforestation"}, {"week": 6, "q": "What is food safety?", "options": ["Preservation of food taste", "Increasing food production", "Handling and storage of food to prevent illness", "Cooking food at high temperature"], "answer": "Handling and storage of food to prevent illness"}, {"week": 6, "q": "Which of the following is NOT a type of food hazard?", "options": ["Biological", "Chemical", "Physical", "Mechanical"], "answer": "Mechanical"}, {"week": 6, "q": "Foodborne illness is mainly caused by:", "options": ["Fresh food", "Contaminated food", "Packaged food", "Organic food"], "answer": "Contaminated food"}, {"week": 6, "q": "Which microorganism is commonly associated with raw or undercooked meat?", "options": ["Salmonella", "Influenza virus", "HIV", "Plasmodium"], "answer": "Salmonella"}, {"week": 6, "q": "Which of the following is a key principle of food hygiene?", "options": ["Eat food quickly", "Avoid refrigeration", "Separate raw and cooked foods", "Store food at room temperature"], "answer": "Separate raw and cooked foods"}, {"week": 6, "q": "What does AMR stand for?", "options": ["Antimicrobial Reaction", "Anti-Microbial Regulation", "Antibiotic Medical Response", "Antimicrobial Resistance"], "answer": "Antimicrobial Resistance"}, {"week": 6, "q": "According to global estimates (2019), approximately how many deaths were directly caused by AMR?", "options": ["0.5 million", "1.27 million", "2.5 million", "4.95 million"], "answer": "1.27 million"}, {"week": 6, "q": "Which of the following is most affected by antimicrobial resistance?", "options": ["High-income countries only", "Low- and middle-income countries", "Only rural areas", "Only developed nations"], "answer": "Low- and middle-income countries"}, {"week": 6, "q": "What is the estimated increase in treatment cost for resistant infections in Indian hospitals?", "options": ["10% higher", "20% higher", "40% higher", "60% higher"], "answer": "40% higher"}, {"week": 6, "q": "What is the main goal of an Antibiotic Stewardship Program?", "options": ["Increase antibiotic sales", "Eliminate all infections", "Promote unnecessary antibiotic use", "Optimize antibiotic use to combat resistance"], "answer": "Optimize antibiotic use to combat resistance"}, {"week": 7, "q": "What is the main concept of “One Health”?", "options": ["Focus only on human diseases", "Focus only on animal health", "Integration of human, animal, and environmental health", "Study of plant diseases only"], "answer": "Integration of human, animal, and environmental health"}, {"week": 7, "q": "Which of the following is an example of a zoonotic disease?", "options": ["Diabetes", "Hypertension", "Asthma", "Rabies"], "answer": "Rabies"}, {"week": 7, "q": "Which of the following is a bacterial zoonotic disease?", "options": ["Rabies", "Tuberculosis", "Malaria", "Dengue"], "answer": "Tuberculosis"}, {"week": 7, "q": "Rabies is an example of which type of zoonotic disease?", "options": ["Bacterial", "Viral", "Fungal", "Protozoal"], "answer": "Viral"}, {"week": 7, "q": "Which of the following is a parasitic zoonotic disease?", "options": ["COVID-19", "Brucellosis", "Toxoplasmosis", "Influenza"], "answer": "Toxoplasmosis"}, {"week": 7, "q": "Which factor contributes to the spread of zoonotic diseases?", "options": ["Urbanization", "Climate change", "Deforestation", "All of the above"], "answer": "All of the above"}, {"week": 7, "q": "Which organization promotes the One Health concept globally?", "options": ["NASA", "WHO", "FIFA", "UNESCO"], "answer": "WHO"}, {"week": 7, "q": "Zoonotic diseases mainly spread through:", "options": ["Direct or indirect contact with animals", "Water only", "Sunlight", "Air only"], "answer": "Direct or indirect contact with animals"}, {"week": 7, "q": "The main goal of One Health is to:", "options": ["Treat only human diseases", "Achieve optimal health for humans, animals, and environment", "Eliminate all viruses", "Improve agricultural production"], "answer": "Achieve optimal health for humans, animals, and environment"}, {"week": 7, "q": "What are zoonotic diseases?", "options": ["Diseases transmitted only among humans", "Diseases caused by plants", "Diseases transmitted from animals to humans", "Genetic disorders"], "answer": "Diseases transmitted from animals to humans"}, {"week": 8, "q": "What is the ‘One Health’ approach?", "options": ["Study of human diseases only", "Integration of human, animal, and environmental health", "Focus only on veterinary science", "Study of ecosystem alone"], "answer": "Integration of human, animal, and environmental health"}, {"week": 8, "q": "According to WHO, One Health involves:", "options": ["Only medical research", "Animal disease control only", "Collaboration of multiple sectors for better public health", "Environmental conservation only"], "answer": "Collaboration of multiple sectors for better public health"}, {"week": 8, "q": "What is zoonotic spillover?", "options": ["Spread of disease within animals only", "Spread of disease through water", "Transfer of disease from humans to environment", "Process where animal pathogens infect humans"], "answer": "Process where animal pathogens infect humans"}, {"week": 8, "q": "Which of the following is a driver of zoonotic diseases?", "options": ["Improved sanitation", "Ecological and behavioral factors", "Vaccination programs", "Health awareness campaigns"], "answer": "Ecological and behavioral factors"}, {"week": 8, "q": "Which organizations are part of the global One Health initiative?", "options": ["WHO only", "WHO, FAO, OIE, UNEP", "Red Cross only", "UNICEF only"], "answer": "WHO, FAO, OIE, UNEP"}, {"week": 8, "q": "What is community participation?", "options": ["Government-only decision making", "Passive involvement of people", "Active engagement of people in solving their own problems", "Only financial contribution by community"], "answer": "Active engagement of people in solving their own problems"}, {"week": 8, "q": "Why is community participation important in public health?", "options": ["To reduce government workload only", "To eliminate need for healthcare workers", "To promote mutual exchange of information and resources", "To increase private sector profits"], "answer": "To promote mutual exchange of information and resources"}, {"week": 8, "q": "Which of the following is a key reason for promoting community participation?", "options": ["Increase in industrialization", "Lack of essential health services", "Decrease in population", "Rise in technology"], "answer": "Lack of essential health services"}, {"week": 8, "q": "The concept of “One Health” emphasizes:", "options": ["Only human health", "Only animal health", "Hospital-based treatment only", "Integration of human, animal, and environmental health"], "answer": "Integration of human, animal, and environmental health"}, {"week": 8, "q": "Who stated that “between animal and human medicine there is no dividing line”?", "options": ["Hippocrates", "Rudolf Virchow", "William Osler", "Bhore Committee"], "answer": "Rudolf Virchow"}];
+
+function shuffle(a){
+  a=[...a];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function norm(s){return String(s).trim().toLowerCase().replace(/\s+/g," ");}
+function esc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+const state={
+ p14:{view:"combined14",questions:[],submitted:false},
+ p58:{view:"combined58",questions:[],submitted:false}
+};
+
+function getQuestions(view){
+  if(view==="combined14") return quizData.filter(x=>x.week>=1&&x.week<=4);
+  if(view==="combined58") return quizData.filter(x=>x.week>=5&&x.week<=8);
+  const w=Number(view.slice(1));
+  return quizData.filter(x=>x.week===w);
+}
+
+function pageForView(view){return view==="combined14"||(+view.slice(1)<=4)?"p14":"p58";}
+
+function render(pageId){
+  const s=state[pageId];
+  const box=document.getElementById(pageId==="p14"?"quiz14":"quiz58");
+  const source=getQuestions(s.view);
+  s.questions=shuffle(source).map((x)=>({...x,options:shuffle(x.options)}));
+  s.submitted=false;
+
+  let label=s.view==="combined14"?"Combined Quiz · Weeks 1–4":
+            s.view==="combined58"?"Combined Quiz · Weeks 5–8":
+            "Week "+s.view.slice(1);
+
+  box.innerHTML=`
+    <div class="toolbar">
+      <button class="btn-primary" type="button" onclick="submitQuiz('${pageId}')">Submit</button>
+      <button class="btn-secondary" type="button" onclick="resetQuiz('${pageId}')">Reset</button>
+    </div>
+    <div class="meta">${s.questions.length} questions loaded · ${esc(label)} · Questions and options are shuffled.</div>
+    <form class="quiz" id="${pageId}Form"></form>
+    <div class="sticky-submit"><button class="btn-primary" type="button" onclick="submitQuiz('${pageId}')">Submit</button></div>
+    <div class="scorebox" id="${pageId}Score">Submit the quiz to see your score.</div>
+  `;
+
+  const form=document.getElementById(pageId+"Form");
+  s.questions.forEach((x,i)=>{
+    const card=document.createElement("div");
+    card.className="question-card";
+    card.innerHTML=`
+      <div class="qtop">
+        <p class="qtitle">${i+1}) ${esc(x.q)}</p>
+        <div class="week-badge">Week ${x.week}</div>
+      </div>
+      <div class="options">
+        ${x.options.map(o=>`<label class="opt"><input type="radio" name="${pageId}q${i}" value="${esc(o)}"><span>${esc(o)}</span></label>`).join("")}
+      </div>
+      <div class="result" id="${pageId}r${i}"></div>`;
+    form.appendChild(card);
+  });
+}
+
+function submitQuiz(pageId){
+  const s=state[pageId];
+  let score=0,c=0,w=0,b=0;
+  s.questions.forEach((x,i)=>{
+    const sel=document.querySelector(`input[name="${pageId}q${i}"]:checked`);
+    const r=document.getElementById(`${pageId}r${i}`);
+    if(!sel){
+      b++; r.textContent=`❌ Not Answered | Correct: ${x.answer}`; r.className="result wrong";
+    }else if(norm(sel.value)===norm(x.answer)){
+      score++; c++; r.textContent="✅ Correct"; r.className="result correct";
+    }else{
+      w++; r.textContent=`❌ Wrong | Correct: ${x.answer}`; r.className="result wrong";
+    }
+  });
+  s.submitted=true;
+  document.getElementById(pageId+"Score").innerHTML=
+    `Final Score: ${score} / ${s.questions.length}
+     <span class="scoredetails">Correct: ${c} &nbsp;|&nbsp; Wrong: ${w} &nbsp;|&nbsp; Not Answered: ${b}</span>`;
+  document.getElementById(pageId+"Score").scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+function resetQuiz(pageId){
+  render(pageId);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function switchPage(pageId){
+  document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+  document.getElementById(pageId).classList.add("active");
+  document.getElementById("page14Btn").classList.toggle("active",pageId==="p14");
+  document.getElementById("page58Btn").classList.toggle("active",pageId==="p58");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function setupTabs(){
+  document.querySelectorAll(".week-tabs").forEach(tabs=>{
+    tabs.querySelectorAll("button").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        const panel=tabs.parentElement.id;
+        const pageId=panel==="p14"?"p14":"p58";
+        const view=btn.dataset.view;
+        state[pageId].view=view;
+        tabs.querySelectorAll("button").forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        render(pageId);
+        window.scrollTo({top:0,behavior:"smooth"});
+      });
+    });
+  });
+}
+
+setupTabs();
+render("p14");
+render("p58");
+</script>
+</body>
+</html>
